@@ -1,0 +1,129 @@
+/* =============================================
+   COLECCIONES DESTACADAS
+   ============================================= */
+.section {
+  padding: 4rem 2rem;
+  background: #ffffff;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Título */
+.heading {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+/* Subtítulo */
+.subheading {
+  font-size: 0.95rem;
+  color: #666666;
+  font-style: italic;
+  margin-bottom: 3rem;
+}
+
+/* Grid de productos */
+.grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+/* Item individual */
+.item {
+  display: block;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
+}
+
+/* Círculo gris */
+.circle {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Imagen del producto */
+.productImg {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+/* Placeholder cuando no hay imagen */
+.placeholder {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #999999;
+  user-select: none;
+}
+
+/* Botón VER MÁS */
+.cta {
+  display: inline-block;
+  background: #c0392b;
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 2rem;
+  border-radius: 2rem;
+  transition: background 0.2s ease;
+}
+
+.cta:hover {
+  background: #a93226;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .circle {
+    width: 130px;
+    height: 130px;
+  }
+
+  .heading {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    gap: 0.75rem;
+  }
+
+  .circle {
+    width: 90px;
+    height: 90px;
+  }
+
+  .cta {
+    font-size: 0.95rem;
+    padding: 0.75rem 2rem;
+  }
+}

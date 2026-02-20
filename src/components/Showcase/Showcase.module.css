@@ -1,0 +1,126 @@
+/* =============================================
+   SHOWCASE — CROM / THE PERFECT CHOICE
+   ============================================= */
+.section {
+  display: flex;
+  width: 100%;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+/* ---- Lado izquierdo: Branding ---- */
+.left {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 4rem 3rem 4rem;
+}
+
+.brandImg {
+  max-width: 480px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---- Lado derecho: Producto + fondo rojo ---- */
+.right {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+/* Fondo rojo inset, no cubre todo el lado */
+.redBg {
+  position: absolute;
+  top: 18%;
+  right: 5%;
+  width: 90%;
+  height: 72%;
+  background: #d42a2a;
+  z-index: 1;
+}
+
+/* Contenedor de imagen */
+.productWrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Placeholder del producto */
+.productPlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #222222;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-8deg);
+}
+
+.productPlaceholder span {
+  color: #666666;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+/* Imagen real del producto */
+.productImg {
+  width: auto;
+  height: auto;
+  max-height: 620px;
+  display: block;
+  transform: rotate(-5deg);
+  filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.55));
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .left {
+    padding: 2.5rem 2rem;
+  }
+
+  .brandImg {
+    max-width: 240px;
+  }
+
+  .right {
+    min-height: 300px;
+  }
+
+  .productImg {
+    max-height: 280px;
+    transform: rotate(-5deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .brandImg {
+    max-width: 200px;
+  }
+
+  .productImg {
+    max-height: 220px;
+  }
+
+  .right {
+    min-height: 250px;
+  }
+}

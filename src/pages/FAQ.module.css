@@ -1,0 +1,148 @@
+.pageContainer {
+    width: 100%;
+    min-height: 80vh;
+    padding-bottom: 5rem;
+    background-color: #ffffff;
+}
+
+.titleSection {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+}
+
+.pageTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #000;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.heroWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 5rem;
+    /* Added margin bottom for spacing before grid */
+    height: 350px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    /* Fallback */
+}
+
+.bgImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/FAQ/Banner.png');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%) brightness(0.7);
+    z-index: 1;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchLabel {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+}
+
+.searchInput {
+    width: 80%;
+    max-width: 600px;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+/* FAQ Grid Section */
+.faqSection {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.faqGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 4rem;
+    /* Row gap 3rem, col gap 4rem */
+}
+
+.faqItem {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.questionBox {
+    border: 3px solid #e00000;
+    /* Red border */
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #000;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    /* Ensure uniform height look */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.questionBox:hover {
+    background-color: #fff0f0;
+}
+
+.questionBox.active {
+    background-color: #e00000;
+    color: #fff;
+}
+
+.answerText {
+    color: #1a1a1a;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+    /* Aligned text */
+}
+
+.noResults {
+    text-align: center;
+    font-size: 1.15rem;
+    color: #777;
+    padding: 2rem 0;
+}
+
+@media (max-width: 768px) {
+    .faqGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

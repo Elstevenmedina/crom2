@@ -1,0 +1,139 @@
+/* =============================================
+   FOOTER
+   ============================================= */
+.footer {
+  background: #c0392b;
+  color: #ffffff;
+  padding: 3.5rem 4rem 2rem;
+  /* Textura punteada sutil */
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* ---- Columnas ---- */
+.columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+.column {
+  flex: 1;
+}
+
+.columnTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.linkList li a {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.linkList li a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ---- Línea separadora ---- */
+.divider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  height: 3px;
+  background: #ffffff;
+}
+
+/* ---- Barra inferior ---- */
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* Info de contacto */
+.contactInfo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+.contactItem:hover {
+  opacity: 0.8;
+}
+
+.contactIcon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2.5rem 2rem 1.5rem;
+  }
+
+  .columns {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contactInfo {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactInfo {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contactItem {
+    font-size: 0.8rem;
+  }
+}
