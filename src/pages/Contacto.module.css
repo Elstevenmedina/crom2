@@ -230,6 +230,40 @@
     background-size: 0.8rem;
 }
 
+/* Status messages */
+.statusMessage {
+    grid-column: 1 / -1;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.statusSuccess {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.statusError {
+    background: #fff5f5;
+    color: #e00000;
+    border: 1px solid #fecaca;
+}
+
+/* Footer rojo del form (inline dentro del form) */
+.formFooterInline {
+    grid-column: 1 / -1;
+    background-color: #ed2c2c;
+    padding: 2.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0 0 30px 30px;
+    margin: 2rem -4rem -3rem;
+}
+
 /* Footer rojo del form */
 .formFooter {
     background-color: #ed2c2c;
@@ -266,6 +300,12 @@
     color: #fff;
 }
 
+.submitBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
 @media (max-width: 768px) {
     .formBody {
         padding: 2rem;
@@ -280,5 +320,13 @@
         padding: 2rem;
         gap: 1.5rem;
         text-align: center;
+    }
+
+    .formFooterInline {
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        text-align: center;
+        margin: 2rem -2rem -2rem;
     }
 }
