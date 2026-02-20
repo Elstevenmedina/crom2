@@ -59,10 +59,12 @@
 /* Links de navegación */
 .navLinks {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 3.5rem;
-  /* Increased gap */
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
   flex-wrap: wrap;
 }
 

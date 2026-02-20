@@ -2,37 +2,45 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import styles from './ProductForm.module.css'
 
+const FIXED_CATEGORIES = [
+  { value: 'bolsos', label: 'Bolsos' },
+  { value: 'cartucheras', label: 'Cartucheras' },
+  { value: 'mochilas', label: 'Mochilas' },
+  { value: 'loncheras', label: 'Loncheras' },
+]
+
+const AVAILABLE_COLORS = [
+  { value: 'verde', label: 'Verde', hex: '#4ade80' },
+  { value: 'naranja', label: 'Naranja', hex: '#fb923c' },
+  { value: 'azul_oscuro', label: 'Azul Oscuro', hex: '#1e3a8a' },
+  { value: 'rojo', label: 'Rojo', hex: '#ef4444' },
+  { value: 'azul', label: 'Azul', hex: '#3b82f6' },
+  { value: 'negro', label: 'Negro', hex: '#000000' },
+]
+
 function ProductForm({ product, onSave, onCancel }) {
   const isEditing = !!product
 
   const [name, setName] = useState('')
   const [code, setCode] = useState('')
-  const [categoryId, setCategoryId] = useState('')
+  const [category, setCategory] = useState('')
+  const [colors, setColors] = useState([])
   const [isActive, setIsActive] = useState(true)
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState('')
-  const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchCategories()
     if (product) {
       setName(product.name || '')
       setCode(product.code || '')
-      setCategoryId(product.category_id || '')
+      setCategory(product.category || '')
+      setColors(product.colors || [])
       setIsActive(product.is_active ?? true)
       setImagePreview(product.image_url || '')
     }
   }, [product])
-
-  const fetchCategories = async () => {
-    const { data } = await supabase
-      .from('categories')
-      .select('*')
-      .order('name')
-    setCategories(data || [])
-  }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -74,7 +82,8 @@ function ProductForm({ product, onSave, onCancel }) {
       const productData = {
         name,
         code,
-        category_id: categoryId || null,
+        category: category || null,
+        colors,
         is_active: isActive,
         image_url: imageUrl,
       }
@@ -161,19 +170,46 @@ function ProductForm({ product, onSave, onCancel }) {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Categoría</label>
+            <label className={styles.label}>Categoría *</label>
             <select
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
               className={styles.input}
+              required
             >
-              <option value="">Sin categoría</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
+              <option value="">Seleccionar categoría</option>
+              {FIXED_CATEGORIES.map((cat) => (
+                <option key={cat.value} value={cat.value}>
+                  {cat.label}
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className={`${styles.field} ${styles.colorsField}`}>
+            <label className={styles.label}>Colores</label>
+            <div className={styles.colorPicker}>
+              {AVAILABLE_COLORS.map((color) => (
+                <button
+                  key={color.value}
+                  type="button"
+                  className={`${styles.colorOption} ${colors.includes(color.value) ? styles.colorOptionActive : ''}`}
+                  onClick={() => {
+                    setColors((prev) =>
+                      prev.includes(color.value)
+                        ? prev.filter((c) => c !== color.value)
+                        : [...prev, color.value]
+                    )
+                  }}
+                >
+                  <span
+                    className={styles.colorSwatch}
+                    style={{ background: color.hex }}
+                  ></span>
+                  <span className={styles.colorLabel}>{color.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className={styles.field}>

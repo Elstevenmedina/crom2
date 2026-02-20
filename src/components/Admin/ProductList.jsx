@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import styles from './ProductList.module.css'
 
+const COLOR_MAP = {
+  verde: '#4ade80',
+  naranja: '#fb923c',
+  azul_oscuro: '#1e3a8a',
+  rojo: '#ef4444',
+  azul: '#3b82f6',
+  negro: '#000000',
+}
+
 function ProductList({ onEdit, onAdd }) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -10,7 +19,7 @@ function ProductList({ onEdit, onAdd }) {
     setLoading(true)
     const { data, error } = await supabase
       .from('products')
-      .select('*, categories(name)')
+      .select('*')
       .order('created_at', { ascending: false })
 
     if (error) {
@@ -66,8 +75,20 @@ function ProductList({ onEdit, onAdd }) {
               <div className={styles.cardBody}>
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productCode}>{product.code}</p>
-                {product.categories && (
-                  <p className={styles.productCategory}>{product.categories.name}</p>
+                {product.category && (
+                  <p className={styles.productCategory}>{product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
+                )}
+                {product.colors && product.colors.length > 0 && (
+                  <div className={styles.colorDots}>
+                    {product.colors.map((c) => (
+                      <span
+                        key={c}
+                        className={styles.colorDot}
+                        style={{ background: COLOR_MAP[c] || '#ccc' }}
+                        title={c.replace('_', ' ')}
+                      ></span>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>

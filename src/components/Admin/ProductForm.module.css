@@ -89,6 +89,54 @@
   accent-color: #e00000;
 }
 
+/* Color picker */
+.colorsField {
+  grid-column: 1 / -1;
+}
+
+.colorPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.colorOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.colorOption:hover {
+  border-color: #bbb;
+}
+
+.colorOptionActive {
+  border-color: #e00000;
+  background: #fff5f5;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.colorSwatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.colorLabel {
+  font-size: 0.85rem;
+}
+
 .imageSection {
   display: flex;
   flex-direction: column;

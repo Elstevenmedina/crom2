@@ -3,15 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import ProductList from './ProductList'
 import ProductForm from './ProductForm'
-import CategoryList from './CategoryList'
-import CategoryForm from './CategoryForm'
 import ContactMessages from './ContactMessages'
 import AdminSettings from './AdminSettings'
 import styles from './Dashboard.module.css'
 
 const tabs = [
   { key: 'products', label: 'Productos', icon: '📦' },
-  { key: 'categories', label: 'Categorías', icon: '🏷️' },
   { key: 'messages', label: 'Mensajes', icon: '✉️' },
   { key: 'settings', label: 'Configuración', icon: '⚙️' },
 ]
@@ -20,9 +17,7 @@ function Dashboard() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('products')
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [selectedCategory, setSelectedCategory] = useState(null)
   const [showProductForm, setShowProductForm] = useState(false)
-  const [showCategoryForm, setShowCategoryForm] = useState(false)
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -44,21 +39,6 @@ function Dashboard() {
     setSelectedProduct(null)
   }
 
-  const handleEditCategory = (category) => {
-    setSelectedCategory(category)
-    setShowCategoryForm(true)
-  }
-
-  const handleNewCategory = () => {
-    setSelectedCategory(null)
-    setShowCategoryForm(true)
-  }
-
-  const handleCategorySaved = () => {
-    setShowCategoryForm(false)
-    setSelectedCategory(null)
-  }
-
   const renderContent = () => {
     switch (activeTab) {
       case 'products':
@@ -78,25 +58,6 @@ function Dashboard() {
           <ProductList
             onEdit={handleEditProduct}
             onAdd={handleNewProduct}
-          />
-        )
-      case 'categories':
-        if (showCategoryForm) {
-          return (
-            <CategoryForm
-              category={selectedCategory}
-              onSave={handleCategorySaved}
-              onCancel={() => {
-                setShowCategoryForm(false)
-                setSelectedCategory(null)
-              }}
-            />
-          )
-        }
-        return (
-          <CategoryList
-            onEdit={handleEditCategory}
-            onAdd={handleNewCategory}
           />
         )
       case 'messages':
@@ -125,9 +86,7 @@ function Dashboard() {
               onClick={() => {
                 setActiveTab(tab.key)
                 setShowProductForm(false)
-                setShowCategoryForm(false)
                 setSelectedProduct(null)
-                setSelectedCategory(null)
               }}
             >
               <span className={styles.navIcon}>{tab.icon}</span>

@@ -3,12 +3,20 @@ import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import styles from './Productos.module.css'
 
-// Categorías fallback (se usan si Supabase no está configurado)
-const fallbackCategories = [
-    { key: 'bolsos', label: 'BOLSOS', title: 'BOLSOS DE VIAJE' },
+const categories = [
+    { key: 'bolsos', label: 'BOLSOS', title: 'BOLSOS' },
     { key: 'cartucheras', label: 'CARTUCHERAS', title: 'CARTUCHERAS' },
     { key: 'mochilas', label: 'MOCHILAS', title: 'MOCHILAS' },
     { key: 'loncheras', label: 'LONCHERAS', title: 'LONCHERAS' },
+]
+
+const AVAILABLE_COLORS = [
+    { value: 'verde', label: 'verde', hex: '#4ade80' },
+    { value: 'naranja', label: 'naranja', hex: '#fb923c' },
+    { value: 'azul_oscuro', label: 'azul oscuro', hex: '#1e3a8a' },
+    { value: 'rojo', label: 'rojo', hex: '#ef4444' },
+    { value: 'azul', label: 'azul', hex: '#3b82f6' },
+    { value: 'negro', label: 'negro', hex: '#000000' },
 ]
 
 const ITEMS_PER_PAGE = 12
@@ -17,75 +25,60 @@ function Productos() {
     const [searchParams] = useSearchParams()
     const activeCategory = searchParams.get('categoria') || 'bolsos'
 
-    const [categories, setCategories] = useState(fallbackCategories)
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalCount, setTotalCount] = useState(0)
+    const [selectedColors, setSelectedColors] = useState([])
+    const [showFilters, setShowFilters] = useState(true)
 
-    // Fetch categorías activas desde Supabase
-    useEffect(() => {
-        const fetchCategories = async () => {
-            if (!supabase) return
+    const toggleColor = (colorValue) => {
+        setSelectedColors((prev) =>
+            prev.includes(colorValue)
+                ? prev.filter((c) => c !== colorValue)
+                : [...prev, colorValue]
+        )
+    }
 
-            const { data, error } = await supabase
-                .from('categories')
-                .select('*')
-                .eq('is_active', true)
-                .order('name')
-
-            if (!error && data && data.length > 0) {
-                const mapped = data.map((cat) => ({
-                    id: cat.id,
-                    key: cat.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-'),
-                    label: cat.name.toUpperCase(),
-                    title: cat.name.toUpperCase(),
-                    image_url: cat.image_url,
-                }))
-                setCategories(mapped)
-            }
-        }
-
-        fetchCategories()
-    }, [])
-
-    // Fetch productos según categoría activa
+    // Fetch productos según categoría activa y colores seleccionados
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true)
             setCurrentPage(1)
 
             if (!supabase) {
-                // Sin Supabase, mostrar placeholders
                 setProducts([])
                 setTotalCount(0)
                 setLoading(false)
                 return
             }
 
-            const currentCat = categories.find((c) => c.key === activeCategory) || categories[0]
-
-            if (!currentCat?.id) {
-                // Si las categorías son fallback (sin id de Supabase)
-                setProducts([])
-                setTotalCount(0)
-                setLoading(false)
-                return
-            }
-
-            const { count } = await supabase
+            // Build count query
+            let countQuery = supabase
                 .from('products')
                 .select('*', { count: 'exact', head: true })
                 .eq('is_active', true)
-                .eq('category_id', currentCat.id)
+                .eq('category', activeCategory)
 
+            if (selectedColors.length > 0) {
+                countQuery = countQuery.overlaps('colors', selectedColors)
+            }
+
+            const { count } = await countQuery
             setTotalCount(count || 0)
 
-            const { data, error } = await supabase
+            // Build data query
+            let dataQuery = supabase
                 .from('products')
                 .select('*')
                 .eq('is_active', true)
-                .eq('category_id', currentCat.id)
+                .eq('category', activeCategory)
+
+            if (selectedColors.length > 0) {
+                dataQuery = dataQuery.overlaps('colors', selectedColors)
+            }
+
+            const { data, error } = await dataQuery
                 .order('created_at', { ascending: false })
                 .range(0, ITEMS_PER_PAGE - 1)
 
@@ -99,24 +92,27 @@ function Productos() {
         }
 
         fetchProducts()
-    }, [activeCategory, categories])
+    }, [activeCategory, selectedColors])
 
     // Paginación
     const loadMore = async () => {
         if (!supabase) return
 
-        const currentCat = categories.find((c) => c.key === activeCategory) || categories[0]
-        if (!currentCat?.id) return
-
         const nextPage = currentPage + 1
         const from = (nextPage - 1) * ITEMS_PER_PAGE
         const to = from + ITEMS_PER_PAGE - 1
 
-        const { data, error } = await supabase
+        let query = supabase
             .from('products')
             .select('*')
             .eq('is_active', true)
-            .eq('category_id', currentCat.id)
+            .eq('category', activeCategory)
+
+        if (selectedColors.length > 0) {
+            query = query.overlaps('colors', selectedColors)
+        }
+
+        const { data, error } = await query
             .order('created_at', { ascending: false })
             .range(from, to)
 
@@ -138,8 +134,11 @@ function Productos() {
                 </div>
 
                 <div className={styles.controls}>
-                    <button className={styles.filterBtn}>
-                        OCULTAR FILTROS
+                    <button
+                        className={styles.filterBtn}
+                        onClick={() => setShowFilters((prev) => !prev)}
+                    >
+                        {showFilters ? 'OCULTAR FILTROS' : 'MOSTRAR FILTROS'}
                         <span style={{ fontSize: '1.2rem' }}>&#9881;</span>
                     </button>
 
@@ -153,37 +152,37 @@ function Productos() {
 
             <div className={styles.content}>
                 {/* Sidebar Filters */}
-                <aside className={styles.sidebar}>
-                    <div className={styles.filterSection}>
-                        <h3 className={styles.filterTitle}>COLOR</h3>
-                        <div className={styles.colorList}>
-                            <div className={styles.colorItem}>
-                                <span className={styles.colorCircle} style={{ background: '#4ade80' }}></span>
-                                verde
+                {showFilters && (
+                    <aside className={styles.sidebar}>
+                        <div className={styles.filterSection}>
+                            <h3 className={styles.filterTitle}>COLOR</h3>
+                            <div className={styles.colorList}>
+                                {AVAILABLE_COLORS.map((color) => (
+                                    <div
+                                        key={color.value}
+                                        className={`${styles.colorItem} ${selectedColors.includes(color.value) ? styles.colorItemActive : ''}`}
+                                        onClick={() => toggleColor(color.value)}
+                                    >
+                                        <span
+                                            className={`${styles.colorCircle} ${selectedColors.includes(color.value) ? styles.colorCircleActive : ''}`}
+                                            style={{ background: color.hex }}
+                                        ></span>
+                                        {color.label}
+                                    </div>
+                                ))}
                             </div>
-                            <div className={styles.colorItem}>
-                                <span className={styles.colorCircle} style={{ background: '#fb923c' }}></span>
-                                naranja
-                            </div>
-                            <div className={styles.colorItem}>
-                                <span className={styles.colorCircle} style={{ background: '#1e3a8a' }}></span>
-                                azul oscuro
-                            </div>
-                            <div className={styles.colorItem}>
-                                <span className={styles.colorCircle} style={{ background: '#ef4444' }}></span>
-                                rojo
-                            </div>
-                            <div className={styles.colorItem}>
-                                <span className={styles.colorCircle} style={{ background: '#3b82f6' }}></span>
-                                azul
-                            </div>
-                            <div className={styles.colorItem}>
-                                <span className={styles.colorCircle} style={{ background: '#000000' }}></span>
-                                negro
-                            </div>
+
+                            {selectedColors.length > 0 && (
+                                <button
+                                    className={styles.clearFilters}
+                                    onClick={() => setSelectedColors([])}
+                                >
+                                    Limpiar filtros
+                                </button>
+                            )}
                         </div>
-                    </div>
-                </aside>
+                    </aside>
+                )}
 
                 {/* Product Grid */}
                 <main className={styles.productGrid}>
@@ -191,7 +190,8 @@ function Productos() {
                         <div className={styles.loadingState}>Cargando productos...</div>
                     ) : products.length === 0 ? (
                         <div className={styles.emptyState}>
-                            No hay productos disponibles en esta categoría.
+                            No hay productos disponibles
+                            {selectedColors.length > 0 ? ' con los filtros seleccionados.' : ' en esta categoría.'}
                         </div>
                     ) : (
                         <>
@@ -207,6 +207,21 @@ function Productos() {
                                             <p className={styles.productName}>{product.name}</p>
                                             {product.code && (
                                                 <p className={styles.productCode}>{product.code}</p>
+                                            )}
+                                            {product.colors && product.colors.length > 0 && (
+                                                <div className={styles.productColors}>
+                                                    {product.colors.map((c) => {
+                                                        const colorData = AVAILABLE_COLORS.find((ac) => ac.value === c)
+                                                        return colorData ? (
+                                                            <span
+                                                                key={c}
+                                                                className={styles.productColorDot}
+                                                                style={{ background: colorData.hex }}
+                                                                title={colorData.label}
+                                                            ></span>
+                                                        ) : null
+                                                    })}
+                                                </div>
                                             )}
                                         </div>
                                     )}
