@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import styles from './Productos.module.css'
@@ -19,28 +20,20 @@ const AVAILABLE_COLORS = [
     { value: 'negro', label: 'negro', hex: '#000000' },
 ]
 
-const ITEMS_PER_PAGE = 12
+const ITEMS_PER_PAGE = 16
 
 function Productos() {
     const [searchParams] = useSearchParams()
     const activeCategory = searchParams.get('categoria') || 'bolsos'
 
     const [products, setProducts] = useState([])
+
     const [loading, setLoading] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalCount, setTotalCount] = useState(0)
-    const [selectedColors, setSelectedColors] = useState([])
-    const [showFilters, setShowFilters] = useState(true)
+    const [selectedProduct, setSelectedProduct] = useState(null)
 
-    const toggleColor = (colorValue) => {
-        setSelectedColors((prev) =>
-            prev.includes(colorValue)
-                ? prev.filter((c) => c !== colorValue)
-                : [...prev, colorValue]
-        )
-    }
-
-    // Fetch productos según categoría activa y colores seleccionados
+    // Fetch productos según categoría activa
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true)
@@ -60,10 +53,6 @@ function Productos() {
                 .eq('is_active', true)
                 .eq('category', activeCategory)
 
-            if (selectedColors.length > 0) {
-                countQuery = countQuery.overlaps('colors', selectedColors)
-            }
-
             const { count } = await countQuery
             setTotalCount(count || 0)
 
@@ -73,10 +62,6 @@ function Productos() {
                 .select('*')
                 .eq('is_active', true)
                 .eq('category', activeCategory)
-
-            if (selectedColors.length > 0) {
-                dataQuery = dataQuery.overlaps('colors', selectedColors)
-            }
 
             const { data, error } = await dataQuery
                 .order('created_at', { ascending: false })
@@ -92,7 +77,7 @@ function Productos() {
         }
 
         fetchProducts()
-    }, [activeCategory, selectedColors])
+    }, [activeCategory])
 
     // Paginación
     const loadMore = async () => {
@@ -107,10 +92,6 @@ function Productos() {
             .select('*')
             .eq('is_active', true)
             .eq('category', activeCategory)
-
-        if (selectedColors.length > 0) {
-            query = query.overlaps('colors', selectedColors)
-        }
 
         const { data, error } = await query
             .order('created_at', { ascending: false })
@@ -132,75 +113,31 @@ function Productos() {
                 <div className={styles.titleWrapper}>
                     <h1 className={styles.pageTitle}>{currentCat?.title || 'PRODUCTOS'}</h1>
                 </div>
-
-                <div className={styles.controls}>
-                    <button
-                        className={styles.filterBtn}
-                        onClick={() => setShowFilters((prev) => !prev)}
-                    >
-                        {showFilters ? 'OCULTAR FILTROS' : 'MOSTRAR FILTROS'}
-                        <span style={{ fontSize: '1.2rem' }}>&#9881;</span>
-                    </button>
-
-                    <select className={styles.sortSelect} defaultValue="relevancia">
-                        <option value="relevancia">ORDENAR POR: RELEVANCIA</option>
-                        <option value="precio_asc">PRECIO: MENOR A MAYOR</option>
-                        <option value="precio_desc">PRECIO: MAYOR A MENOR</option>
-                    </select>
-                </div>
             </div>
 
             <div className={styles.content}>
-                {/* Sidebar Filters */}
-                {showFilters && (
-                    <aside className={styles.sidebar}>
-                        <div className={styles.filterSection}>
-                            <h3 className={styles.filterTitle}>COLOR</h3>
-                            <div className={styles.colorList}>
-                                {AVAILABLE_COLORS.map((color) => (
-                                    <div
-                                        key={color.value}
-                                        className={`${styles.colorItem} ${selectedColors.includes(color.value) ? styles.colorItemActive : ''}`}
-                                        onClick={() => toggleColor(color.value)}
-                                    >
-                                        <span
-                                            className={`${styles.colorCircle} ${selectedColors.includes(color.value) ? styles.colorCircleActive : ''}`}
-                                            style={{ background: color.hex }}
-                                        ></span>
-                                        {color.label}
-                                    </div>
-                                ))}
-                            </div>
-
-                            {selectedColors.length > 0 && (
-                                <button
-                                    className={styles.clearFilters}
-                                    onClick={() => setSelectedColors([])}
-                                >
-                                    Limpiar filtros
-                                </button>
-                            )}
-                        </div>
-                    </aside>
-                )}
-
                 {/* Product Grid */}
                 <main className={styles.productGrid}>
                     {loading ? (
                         <div className={styles.loadingState}>Cargando productos...</div>
                     ) : products.length === 0 ? (
                         <div className={styles.emptyState}>
-                            No hay productos disponibles
-                            {selectedColors.length > 0 ? ' con los filtros seleccionados.' : ' en esta categoría.'}
+                            No hay productos disponibles en esta categoría.
                         </div>
                     ) : (
                         <>
                             {products.map((product) => (
-                                <div key={product.id} className={styles.productCard}>
-                                    <img
+                                <motion.div
+                                    key={product.id}
+                                    className={styles.productCard}
+                                    onClick={() => setSelectedProduct(product)}
+                                    layoutId={`product-${product.id}`}
+                                >
+                                    <motion.img
                                         src={product.image_url || '/assets/Home/cartuchera.png'}
                                         alt={product.name || 'Producto'}
                                         className={styles.productImage}
+                                        layoutId={`image-${product.id}`}
                                     />
                                     {product.name && (
                                         <div className={styles.productInfo}>
@@ -225,7 +162,7 @@ function Productos() {
                                             )}
                                         </div>
                                     )}
-                                </div>
+                                </motion.div>
                             ))}
 
                             {hasMore && (
@@ -239,6 +176,42 @@ function Productos() {
                     )}
                 </main>
             </div>
+
+            {/* Modal de Producto */}
+            <AnimatePresence>
+                {selectedProduct && (
+                    <motion.div
+                        className={styles.modalOverlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedProduct(null)}
+                    >
+                        <motion.div
+                            className={styles.modalContent}
+                            onClick={(e) => e.stopPropagation()}
+                            initial={{ scale: 0.9, opacity: 0, y: 30 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 30 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        >
+                            <button className={styles.modalClose} onClick={() => setSelectedProduct(null)}>✕</button>
+                            <motion.img
+                                src={selectedProduct.image_url || '/assets/Home/cartuchera.png'}
+                                alt={selectedProduct.name}
+                                className={styles.modalImage}
+                                layoutId={`image-${selectedProduct.id}`}
+                            />
+                            <div className={styles.modalInfo}>
+                                <h2 className={styles.modalTitle}>{selectedProduct.name}</h2>
+                                {selectedProduct.code && (
+                                    <p className={styles.modalCode}>COD: {selectedProduct.code}</p>
+                                )}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }

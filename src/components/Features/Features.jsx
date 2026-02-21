@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import styles from './Features.module.css'
 
 const collections = [
@@ -19,18 +20,47 @@ const collections = [
   },
 ]
 
+const textVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.5, y: 50 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 12 } }
+}
+
 function Features() {
   return (
-    <section id="colecciones" className={styles.section}>
-      <div className={styles.container}>
-        <h2 className={styles.heading}>COLECCIONES DESTACADAS</h2>
-        <p className={styles.subheading}>
+    <section id="colecciones" className={styles.section} style={{ overflow: 'hidden' }}>
+      <motion.div
+        className={styles.container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <motion.h2 variants={textVariants} className={styles.heading}>COLECCIONES DESTACADAS</motion.h2>
+        <motion.p variants={textVariants} className={styles.subheading}>
           Descubre nuestra línea de productos destacados de la semana
-        </p>
+        </motion.p>
 
-        <div className={styles.grid}>
+        <motion.div variants={containerVariants} className={styles.grid}>
           {collections.map((item) => (
-            <a key={item.name} href={`#${item.name.toLowerCase()}`} className={styles.item}>
+            <motion.a
+              variants={itemVariants}
+              key={item.name}
+              href={`#${item.name.toLowerCase()}`}
+              className={styles.item}
+              whileHover={{ scale: 1.05, y: -5 }}
+            >
               <div className={styles.circle}>
                 {item.image ? (
                   <img src={item.image} alt={item.name} className={styles.productImg} />
@@ -38,14 +68,21 @@ function Features() {
                   <span className={styles.placeholder}>{item.name.charAt(0)}</span>
                 )}
               </div>
-            </a>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
 
-        <a href="#colecciones" className={styles.cta}>
-          VER MÁS
-        </a>
-      </div>
+        <motion.div variants={textVariants}>
+          <motion.a
+            href="#colecciones"
+            className={styles.cta}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            VER MÁS
+          </motion.a>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

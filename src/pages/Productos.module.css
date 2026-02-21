@@ -1,7 +1,7 @@
 .pageContainer {
     padding: 2rem 0;
     width: 100%;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     min-height: 80vh;
 }
@@ -200,8 +200,8 @@
 .productGrid {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* 3 columns */
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 columns */
     gap: 2rem;
 }
 
@@ -216,11 +216,13 @@
     justify-content: center;
     aspect-ratio: 1;
     /* Square cards */
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
 }
 
 .productCard:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 .productImage {
@@ -304,12 +306,91 @@
     background: #c0392b;
 }
 
-@media (max-width: 900px) {
+/* Modal Styling */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.modalContent {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modalClose {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+}
+
+.modalClose:hover {
+    color: #e00000;
+}
+
+.modalImage {
+    width: 100%;
+    max-height: 50vh;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+}
+
+.modalInfo {
+    text-align: center;
+    width: 100%;
+}
+
+.modalTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 0.5rem;
+}
+
+.modalCode {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
     .productGrid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
     .pageContainer {
         padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .productGrid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

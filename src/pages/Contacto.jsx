@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import { supabase } from '../lib/supabase'
 import styles from './Contacto.module.css'
@@ -7,6 +8,33 @@ const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const EMAILJS_TEMPLATE_USER = import.meta.env.VITE_EMAILJS_TEMPLATE_USER
 const EMAILJS_TEMPLATE_ADMIN = import.meta.env.VITE_EMAILJS_TEMPLATE_ADMIN
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+// 1. Hero Animation: Blurred DropDown
+const blurDrop = {
+    hidden: { opacity: 0, y: -50, filter: 'blur(10px)' },
+    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: "easeOut" } }
+}
+
+// 2. Cards Animation: 3D Flip Entry
+const cardFlip = {
+    hidden: { opacity: 0, rotateX: 90, z: -100 },
+    visible: { opacity: 1, rotateX: 0, z: 0, transition: { type: "spring", bounce: 0.4, duration: 1 } }
+}
+
+// 3. Form Animation: Side Slide with Staggered Inputs
+const formSlide = {
+    hidden: { opacity: 0, x: 100 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: { type: "spring", damping: 20, stiffness: 100, staggerChildren: 0.1, delayChildren: 0.3 }
+    }
+}
+
+const inputPop = {
+    hidden: { opacity: 0, scale: 0.9, y: 20 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 150 } }
+}
 
 function Contacto() {
     const [formData, setFormData] = useState({
@@ -122,9 +150,14 @@ function Contacto() {
     }
 
     return (
-        <div className={styles.pageContainer}>
+        <div className={styles.pageContainer} style={{ overflowX: 'hidden', perspective: '1000px' }}>
             {/* Hero Section */}
-            <section className={styles.hero}>
+            <motion.section
+                className={styles.hero}
+                initial="hidden"
+                animate="visible"
+                variants={blurDrop}
+            >
                 <div className={styles.heroContent}>
                     <h1 className={styles.title}>Contáctanos</h1>
                     <p className={styles.subtitle}>
@@ -132,62 +165,99 @@ function Contacto() {
                         Escríbenos y te respondemos en 24 horas.
                     </p>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Opciones de Contacto */}
             <section className={styles.contactOptions}>
                 <div className={styles.optionsContainer}>
                     {/* WhatsApp */}
-                    <div className={styles.contactCard}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-50px" }}
+                        variants={cardFlip}
+                        className={styles.contactCard}
+                        style={{ transformStyle: "preserve-3d" }}
+                    >
                         <div className={styles.iconWrapper}>
-                            <img
+                            <motion.img
                                 src="/assets/contactanos/llamar (2).png"
                                 alt="WhatsApp"
                                 className={styles.contactIcon}
+                                whileHover={{ rotate: 15, scale: 1.2 }}
+                                transition={{ type: "spring", stiffness: 300 }}
                             />
                         </div>
                         <h2 className={styles.contactTitle}>Escríbenos al Whatsapp</h2>
                         <p className={styles.contactText}>
                             Habla directamente con nuestro equipo comercial especializado. Te asesoramos sobre distribución, stock disponible y precios mayoristas al instante.
                         </p>
-                        <a href="tel:+50763365987" className={styles.contactLink}>+507 6336-5987</a>
-                    </div>
+                        <motion.a
+                            href="tel:+50763365987"
+                            className={styles.contactLink}
+                            whileHover={{ x: 5, color: "#FF0000" }}
+                        >
+                            +507 6336-5987
+                        </motion.a>
+                    </motion.div>
 
                     {/* Email */}
-                    <div className={styles.contactCard}>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-50px" }}
+                        variants={cardFlip}
+                        className={styles.contactCard}
+                        style={{ transformStyle: "preserve-3d" }}
+                    >
                         <div className={styles.iconWrapper}>
-                            <img
+                            <motion.img
                                 src="/assets/contactanos/correo-electronico.png"
                                 alt="Email"
                                 className={styles.contactIcon}
+                                whileHover={{ rotate: -15, scale: 1.2 }}
+                                transition={{ type: "spring", stiffness: 300 }}
                             />
                         </div>
                         <h2 className={styles.contactTitle}>Escríbenos al Email</h2>
                         <p className={styles.contactText}>
                             Envíanos tu consulta sobre distribuidores internacionales, nuevos modelos de mochilas escolares o disponibilidad de loncheras.
                         </p>
-                        <a href="mailto:ventas@hamzisa.com" className={styles.contactLink}>ventas@hamzisa.com</a>
-                    </div>
+                        <motion.a
+                            href="mailto:ventas@hamzisa.com"
+                            className={styles.contactLink}
+                            whileHover={{ x: 5, color: "#FF0000" }}
+                        >
+                            ventas@hamzisa.com
+                        </motion.a>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Formulario Distribuidores */}
             <section className={styles.formSection}>
-                <div className={styles.formCard}>
+                <motion.div
+                    className={styles.formCard}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={formSlide}
+                >
                     <div className={styles.formBody}>
-                        <h2 className={styles.formTitle}>
+                        <motion.h2 variants={inputPop} className={styles.formTitle}>
                             Forma parte de nuestros<br />
                             distribuidores internacionales
-                        </h2>
+                        </motion.h2>
 
                         {status.text && (
-                            <div className={`${styles.statusMessage} ${status.type === 'success' ? styles.statusSuccess : styles.statusError}`}>
+                            <motion.div variants={inputPop} className={`${styles.statusMessage} ${status.type === 'success' ? styles.statusSuccess : styles.statusError}`}>
                                 {status.text}
-                            </div>
+                            </motion.div>
                         )}
 
                         <form className={styles.formGrid} onSubmit={handleSubmit}>
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="text"
                                 name="full_name"
                                 value={formData.full_name}
@@ -196,7 +266,8 @@ function Contacto() {
                                 className={styles.inputField}
                                 required
                             />
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="text"
                                 name="company"
                                 value={formData.company}
@@ -206,7 +277,8 @@ function Contacto() {
                                 required
                             />
 
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="email"
                                 name="email"
                                 value={formData.email}
@@ -215,7 +287,8 @@ function Contacto() {
                                 className={styles.inputField}
                                 required
                             />
-                            <select
+                            <motion.select
+                                variants={inputPop}
                                 name="type"
                                 value={formData.type}
                                 onChange={handleChange}
@@ -226,9 +299,10 @@ function Contacto() {
                                 <option value="retail">Retail</option>
                                 <option value="wholesale">Mayorista</option>
                                 <option value="other">Otro</option>
-                            </select>
+                            </motion.select>
 
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="tel"
                                 name="phone"
                                 value={formData.phone}
@@ -237,7 +311,8 @@ function Contacto() {
                                 className={styles.inputField}
                                 required
                             />
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="text"
                                 name="country"
                                 value={formData.country}
@@ -247,7 +322,8 @@ function Contacto() {
                                 required
                             />
 
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="text"
                                 name="website"
                                 value={formData.website}
@@ -255,7 +331,8 @@ function Contacto() {
                                 placeholder="Sitio Web"
                                 className={styles.inputField}
                             />
-                            <input
+                            <motion.input
+                                variants={inputPop}
                                 type="text"
                                 name="message"
                                 value={formData.message}
@@ -265,18 +342,24 @@ function Contacto() {
                                 required
                             />
 
-                            <div className={styles.formFooterInline}>
+                            <motion.div variants={inputPop} className={styles.formFooterInline}>
                                 <p className={styles.footerText}>
                                     Te respondemos en máximo 24 horas<br />
                                     con toda la información.
                                 </p>
-                                <button type="submit" className={styles.submitBtn} disabled={loading}>
+                                <motion.button
+                                    whileHover={{ scale: 1.05, boxShadow: "0px 10px 15px rgba(255,0,0,0.3)" }}
+                                    whileTap={{ scale: 0.95 }}
+                                    type="submit"
+                                    className={styles.submitBtn}
+                                    disabled={loading}
+                                >
                                     {loading ? 'Enviando...' : 'Enviar'}
-                                </button>
-                            </div>
+                                </motion.button>
+                            </motion.div>
                         </form>
                     </div>
-                </div>
+                </motion.div>
             </section>
         </div>
     )

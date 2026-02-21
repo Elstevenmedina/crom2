@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import styles from './FAQ.module.css'
 
 const faqData = [
@@ -24,6 +25,34 @@ const faqData = [
     }
 ]
 
+// Animaciones globales
+const headerAnim = {
+    hidden: { opacity: 0, y: -40, filter: "blur(5px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } }
+}
+
+const searchAnim = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.7, delay: 0.2, ease: "easeOut" } }
+}
+
+// Stagger para que las preguntas bajen como dominó
+const listStagger = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.4
+        }
+    }
+}
+
+const itemStagger = {
+    hidden: { opacity: 0, y: 30, x: -20 },
+    visible: { opacity: 1, y: 0, x: 0, transition: { type: "spring", stiffness: 120, damping: 14 } }
+}
+
 function FAQ() {
     const [openId, setOpenId] = useState(null)
     const [searchQuery, setSearchQuery] = useState('')
@@ -38,49 +67,94 @@ function FAQ() {
     )
 
     return (
-        <div className={styles.pageContainer}>
-            <div className={styles.titleSection}>
+        <div className={styles.pageContainer} style={{ overflowX: 'hidden' }}>
+            {/* Título */}
+            <motion.div
+                className={styles.titleSection}
+                initial="hidden"
+                animate="visible"
+                variants={headerAnim}
+            >
                 <h1 className={styles.pageTitle}>CENTRO DE AYUDA</h1>
-            </div>
+            </motion.div>
 
-            <div className={styles.heroWrapper}>
+            {/* Buscador y Hero */}
+            <motion.div
+                className={styles.heroWrapper}
+                initial="hidden"
+                animate="visible"
+                variants={searchAnim}
+            >
                 <div className={styles.bgImage} />
                 <div className={styles.content}>
                     <h2 className={styles.searchLabel}>Buscador</h2>
-                    <input
+                    <motion.input
                         type="text"
                         className={styles.searchInput}
                         placeholder="Buscar pregunta..."
                         value={searchQuery}
+                        whileFocus={{ scale: 1.02, boxShadow: "0px 0px 15px rgba(255, 0, 0, 0.4)" }}
                         onChange={(e) => {
                             setSearchQuery(e.target.value)
                             setOpenId(null)
                         }}
                     />
                 </div>
-            </div>
+            </motion.div>
 
+            {/* Lista FAQ (El Acordeón) */}
             <div className={styles.faqSection}>
                 {filteredFaq.length > 0 ? (
-                    <div className={styles.faqGrid}>
+                    <motion.div
+                        className={styles.faqGrid}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-50px" }}
+                        variants={listStagger}
+                    >
                         {filteredFaq.map((item) => (
-                            <div key={item.id} className={styles.faqItem}>
-                                <div
+                            <motion.div
+                                variants={itemStagger}
+                                key={item.id}
+                                className={styles.faqItem}
+                                layout // Para que se acomoden fluidamente al abrirse
+                            >
+                                <motion.div
                                     className={`${styles.questionBox} ${openId === item.id ? styles.active : ''}`}
                                     onClick={() => toggleFAQ(item.id)}
+                                    whileHover={{ scale: 1.01, x: 5 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    layout
                                 >
                                     {item.question}
-                                </div>
-                                {openId === item.id && (
-                                    <p className={styles.answerText}>
-                                        {item.answer}
-                                    </p>
-                                )}
-                            </div>
+                                </motion.div>
+
+                                <AnimatePresence>
+                                    {openId === item.id && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.4, ease: "easeInOut" }}
+                                            style={{ overflow: "hidden" }} // Previene salto visual en textos largos
+                                        >
+                                            <p className={styles.answerText}>
+                                                {item.answer}
+                                            </p>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 ) : (
-                    <p className={styles.noResults}>No se encontraron resultados para "{searchQuery}"</p>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className={styles.noResults}
+                    >
+                        No se encontraron resultados para "{searchQuery}"
+                    </motion.p>
                 )}
             </div>
         </div>

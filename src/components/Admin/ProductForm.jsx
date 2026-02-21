@@ -9,22 +9,12 @@ const FIXED_CATEGORIES = [
   { value: 'loncheras', label: 'Loncheras' },
 ]
 
-const AVAILABLE_COLORS = [
-  { value: 'verde', label: 'Verde', hex: '#4ade80' },
-  { value: 'naranja', label: 'Naranja', hex: '#fb923c' },
-  { value: 'azul_oscuro', label: 'Azul Oscuro', hex: '#1e3a8a' },
-  { value: 'rojo', label: 'Rojo', hex: '#ef4444' },
-  { value: 'azul', label: 'Azul', hex: '#3b82f6' },
-  { value: 'negro', label: 'Negro', hex: '#000000' },
-]
-
 function ProductForm({ product, onSave, onCancel }) {
   const isEditing = !!product
 
   const [name, setName] = useState('')
   const [code, setCode] = useState('')
   const [category, setCategory] = useState('')
-  const [colors, setColors] = useState([])
   const [isActive, setIsActive] = useState(true)
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState('')
@@ -36,7 +26,6 @@ function ProductForm({ product, onSave, onCancel }) {
       setName(product.name || '')
       setCode(product.code || '')
       setCategory(product.category || '')
-      setColors(product.colors || [])
       setIsActive(product.is_active ?? true)
       setImagePreview(product.image_url || '')
     }
@@ -83,7 +72,6 @@ function ProductForm({ product, onSave, onCancel }) {
         name,
         code,
         category: category || null,
-        colors,
         is_active: isActive,
         image_url: imageUrl,
       }
@@ -184,32 +172,6 @@ function ProductForm({ product, onSave, onCancel }) {
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className={`${styles.field} ${styles.colorsField}`}>
-            <label className={styles.label}>Colores</label>
-            <div className={styles.colorPicker}>
-              {AVAILABLE_COLORS.map((color) => (
-                <button
-                  key={color.value}
-                  type="button"
-                  className={`${styles.colorOption} ${colors.includes(color.value) ? styles.colorOptionActive : ''}`}
-                  onClick={() => {
-                    setColors((prev) =>
-                      prev.includes(color.value)
-                        ? prev.filter((c) => c !== color.value)
-                        : [...prev, color.value]
-                    )
-                  }}
-                >
-                  <span
-                    className={styles.colorSwatch}
-                    style={{ background: color.hex }}
-                  ></span>
-                  <span className={styles.colorLabel}>{color.label}</span>
-                </button>
-              ))}
-            </div>
           </div>
 
           <div className={styles.field}>
