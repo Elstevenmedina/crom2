@@ -25,51 +25,53 @@ function Nosotros() {
         </div>
       </section>
 
-      {/* Section: Expansión (Fondo Rojo + Imagen Niño + Tarjeta) */}
-      <section className={styles.expansion}>
-        <div className={styles.expansionContent}>
+      <div className={styles.combinedBg}>
+        {/* Section: Expansión (Fondo Rojo + Imagen Niño + Tarjeta) */}
+        <section className={styles.expansion}>
+          <div className={styles.expansionContent}>
 
-          {/* Imagen del niño (Lado Izquierdo) */}
-          <div className={styles.kidImageWrapper}>
-            <img
-              src="/assets/Nosotros/backpad_kid.png"
-              alt="Niño con mochila Crom"
-              className={styles.kidImage}
-            />
+            {/* Imagen del niño (Lado Izquierdo) */}
+            <div className={styles.kidImageWrapper}>
+              <img
+                src="/assets/Nosotros/backpad_kid.png"
+                alt="Niño con mochila Crom"
+                className={styles.kidImage}
+              />
+            </div>
+
+            {/* Tarjeta de texto (Lado Derecho) */}
+            <div className={styles.expansionCard}>
+              <p>
+                Con el paso del tiempo, Crom amplió su portafolio para ofrecer una propuesta integral
+                que incluye mochilas, loncheras y bolsos escolares, diseñados para responder a las
+                necesidades reales de estudiantes, familias y usuarios activos.
+              </p>
+            </div>
+
           </div>
+        </section>
 
-          {/* Tarjeta de texto (Lado Derecho) */}
-          <div className={styles.expansionCard}>
-            <p>
-              Con el paso del tiempo, Crom amplió su portafolio para ofrecer una propuesta integral
-              que incluye mochilas, loncheras y bolsos escolares, diseñados para responder a las
-              necesidades reales de estudiantes, familias y usuarios activos.
-            </p>
+        {/* Section: Franja Productos */}
+        <section className={styles.productStrip}>
+          <div className={styles.productStripContent}>
+            <div className={styles.productTextSide}>
+              <h2 className={styles.productTitle}>
+                Cada producto refleja un<br />equilibrio entre diseño
+              </h2>
+              <p className={styles.productSubtitle}>
+                practicidad y durabilidad, valores que han definido a<br />
+                la marca durante más de tres décadas.
+              </p>
+            </div>
+
+            <div className={styles.productButtonSide}>
+              <a href="/productos" className={styles.productButton}>
+                Ver productos
+              </a>
+            </div>
           </div>
-
-        </div>
-      </section>
-
-      {/* Section: Franja Productos */}
-      <section className={styles.productStrip}>
-        <div className={styles.productStripContent}>
-          <div className={styles.productTextSide}>
-            <h2 className={styles.productTitle}>
-              Cada producto refleja un<br />equilibrio entre diseño
-            </h2>
-            <p className={styles.productSubtitle}>
-              practicidad y durabilidad, valores que han definido a<br />
-              la marca durante más de tres décadas.
-            </p>
-          </div>
-
-          <div className={styles.productButtonSide}>
-            <a href="/productos" className={styles.productButton}>
-              Ver productos
-            </a>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Section: Diferenciadores */}
       <section className={styles.differentiators}>

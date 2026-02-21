@@ -140,14 +140,18 @@
 /* =============================================
    SECTION: EXPANSIÓN (RED BG)
    ============================================= */
-.expansion {
+.combinedBg {
   width: 100%;
   background: url('/assets/Nosotros/background_backpad_kid.png');
   background-size: cover;
-  background-position: top center;
+  background-position: center top;
   background-repeat: no-repeat;
+}
+
+.expansion {
+  width: 100%;
   border-top: 4px solid #000;
-  padding: 1rem 4rem 0;
+  padding: 2rem 4rem 4.6rem;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -543,10 +547,6 @@
    ============================================= */
 .productStrip {
   width: 100%;
-  background: url('/assets/Nosotros/background_backpad_kid.png');
-  background-size: cover;
-  background-position: bottom center;
-  background-repeat: no-repeat;
   padding: 3.5rem 4rem;
   display: flex;
   justify-content: center;

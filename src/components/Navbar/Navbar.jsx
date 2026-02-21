@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import styles from './Navbar.module.css'
 
 const slides = [
@@ -121,24 +122,43 @@ function Navbar() {
 
         {/* Slides */}
         <div className={styles.slidesTrack}>
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className={`${styles.slide} ${index === currentSlide ? styles.slideActive : ''}`}
-            >
-              <div className={styles.slideContent}>
-                {slide.image ? (
-                  <img src={slide.image} alt="CROM" className={styles.slideImg} />
-                ) : (
-                  <>
-                    <span className={styles.slideCategory}>{slide.category}</span>
-                    <h2 className={styles.slideTitle}>{slide.title}</h2>
-                    <p className={styles.slideSubtitle}>{slide.subtitle}</p>
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
+          <AnimatePresence mode="popLayout">
+            {slides.map((slide, index) => (
+              index === currentSlide && (
+                <motion.div
+                  key={slide.id}
+                  className={`${styles.slide} ${styles.slideActive}`}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                >
+                  <div className={styles.slideContent}>
+                    {slide.image ? (
+                      <motion.img
+                        src={slide.image}
+                        alt="CROM"
+                        className={styles.slideImg}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                      />
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                      >
+                        <span className={styles.slideCategory}>{slide.category}</span>
+                        <h2 className={styles.slideTitle}>{slide.title}</h2>
+                        <p className={styles.slideSubtitle}>{slide.subtitle}</p>
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.div>
+              )
+            ))}
+          </AnimatePresence>
         </div>
 
         {/* Flecha izquierda */}
