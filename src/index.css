@@ -34,3 +34,15 @@ img {
   max-width: 100%;
   display: block;
 }
+
+button:hover {
+  background-color: #cd2525;
+  box-shadow: 0 4px 12px rgba(205, 37, 37, 0.3);
+}
+
+button:focus,
+button:focus-visible,
+button:active {
+  outline: 2px solid #cd2525;
+  outline-offset: 2px;
+}
