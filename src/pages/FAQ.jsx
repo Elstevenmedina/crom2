@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import SEO from '../components/SEO'
 import styles from './FAQ.module.css'
 
 const faqData = [
@@ -68,6 +69,11 @@ function FAQ() {
 
     return (
         <div className={styles.pageContainer} style={{ overflowX: 'hidden' }}>
+            <SEO
+                title="Preguntas Frecuentes"
+                description="Resuelve tus dudas sobre mochilas, bolsos, loncheras y cartucheras CROM. Garant\u00eda, materiales, env\u00edos y m\u00e1s."
+                path="/faq"
+            />
             {/* Título */}
             <motion.div
                 className={styles.titleSection}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /seed
+
+Sitemap: https://crompanama.com/sitemap.xml

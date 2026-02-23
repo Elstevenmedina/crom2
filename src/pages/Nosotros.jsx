@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import SEO from '../components/SEO'
 import styles from './Nosotros.module.css'
 
 // Variantes de animación personalizadas para dar variedad y no usar la misma siempre
@@ -35,6 +36,12 @@ const staggerItem = {
 function Nosotros() {
   return (
     <main>
+      <SEO
+        title="Sobre Nosotros"
+        description="Conoce la historia de CROM: m\u00e1s de 30 a\u00f1os desarrollando mochilas, bolsos y loncheras escolares resistentes y funcionales con alcance internacional."
+        path="/nosotros"
+        image="/assets/Nosotros/banner.png"
+      />
       {/* Hero Section */}
       <motion.section
         className={styles.hero}

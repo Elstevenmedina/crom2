@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 import styles from './Productos.module.css'
 
 const categories = [
@@ -118,6 +119,11 @@ function Productos() {
 
     return (
         <div className={styles.pageContainer}>
+            <SEO
+                title={`${currentCat?.title || 'Productos'} - Cat\u00e1logo`}
+                description={`Explora nuestra colecci\u00f3n de ${(currentCat?.title || 'productos').toLowerCase()} CROM. Dise\u00f1os resistentes, funcionales y con estilo para estudiantes y familias.`}
+                path={`/productos?categoria=${activeCategory}`}
+            />
             {/* Header and Controls */}
             <div className={styles.topSection}>
                 <div className={styles.titleWrapper}>

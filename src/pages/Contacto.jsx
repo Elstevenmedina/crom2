@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 import styles from './Contacto.module.css'
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
@@ -151,6 +152,12 @@ function Contacto() {
 
     return (
         <div className={styles.pageContainer} style={{ overflowX: 'hidden', perspective: '1000px' }}>
+            <SEO
+                title="Contáctanos"
+                description="Ponte en contacto con CROM. Ll\u00e1manos, escr\u00edbenos o completa el formulario para distribuidores. Atenci\u00f3n personalizada para Panam\u00e1 y la regi\u00f3n."
+                path="/contacto"
+                image="/assets/contactanos/banner.png"
+            />
             {/* Hero Section */}
             <motion.section
                 className={styles.hero}
