@@ -33,7 +33,7 @@
   width: 100%;
   height: 1.4rem;
   margin-top: 1.2rem;
-  background: #e53e3e;
+  background: #cd2525;
 }
 
 /* Navegación */
@@ -82,7 +82,7 @@
 }
 
 .navLinks li a:hover {
-  color: #e53e3e;
+  color: #cd2525;
 }
 
 /* =============================================
@@ -108,7 +108,7 @@
 /* Franja roja promocional */
 .promoBanner {
   width: 100%;
-  background: #e53e3e;
+  background: #cd2525;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,7 +164,7 @@
 .navWhite .navLinks li a:hover,
 .navWhite .navLinks li a.activeLink {
   /* Ensure active link override works if specifity matches */
-  color: #e53e3e !important;
+  color: #cd2525 !important;
 }
 
 .navWhite .logo {
@@ -174,14 +174,14 @@
 
 /* Link activo (ej. NOSOTROS en rojo) */
 .activeLink {
-  color: #e53e3e !important;
+  color: #cd2525 !important;
 }
 
 /* Línea roja separadora debajo del nav */
 .dividerLine {
   width: 100%;
   height: 3px;
-  background: #e53e3e;
+  background: #cd2525;
 }
 
 /* =============================================
@@ -240,7 +240,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #e53e3e;
+  color: #cd2525;
   margin-bottom: 1rem;
   font-weight: 600;
 }

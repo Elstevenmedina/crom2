@@ -195,7 +195,7 @@ function Contacto() {
                         <motion.a
                             href="tel:+50763365987"
                             className={styles.contactLink}
-                            whileHover={{ x: 5, color: "#FF0000" }}
+                            whileHover={{ x: 5, color: "#cd2525" }}
                         >
                             +507 6336-5987
                         </motion.a>
@@ -226,7 +226,7 @@ function Contacto() {
                         <motion.a
                             href="mailto:ventas@hamzisa.com"
                             className={styles.contactLink}
-                            whileHover={{ x: 5, color: "#FF0000" }}
+                            whileHover={{ x: 5, color: "#cd2525" }}
                         >
                             ventas@hamzisa.com
                         </motion.a>
@@ -348,7 +348,7 @@ function Contacto() {
                                     con toda la información.
                                 </p>
                                 <motion.button
-                                    whileHover={{ scale: 1.05, boxShadow: "0px 10px 15px rgba(255,0,0,0.3)" }}
+                                    whileHover={{ scale: 1.05, boxShadow: "0px 10px 15px rgba(205,37,37,0.3)" }}
                                     whileTap={{ scale: 0.95 }}
                                     type="submit"
                                     className={styles.submitBtn}
