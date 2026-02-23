@@ -33,6 +33,7 @@ const navLinks = [
 
 function Navbar() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
   const isHome = location.pathname === '/'
 
@@ -64,14 +65,27 @@ function Navbar() {
 
         {/* Logo */}
         <nav className={navClass}>
-          <div className={styles.logoContainer}>
-            <Link to="/" className={styles.logoLink}>
-              <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
-            </Link>
+          <div className={styles.navRow}>
+            <div className={styles.logoContainer}>
+              <Link to="/" className={styles.logoLink}>
+                <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
+              </Link>
+            </div>
+
+            {/* Hamburger button (mobile only) */}
+            <button
+              className={styles.hamburger}
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label="Menú"
+            >
+              <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+              <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+              <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+            </button>
           </div>
 
           {/* Links de navegación */}
-          <ul className={styles.navLinks}>
+          <ul className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ''}`}>
             {navLinks.map((link) => {
               const currentUrl = location.pathname + location.search
               const isActive = link.to.includes('?')
@@ -82,6 +96,7 @@ function Navbar() {
                   <Link
                     to={link.to}
                     className={isActive ? styles.activeLink : ''}
+                    onClick={() => setMenuOpen(false)}
                   >
                     {link.label}
                   </Link>
@@ -105,15 +120,28 @@ function Navbar() {
         <div className={styles.navOverlay}>
           <div className={styles.topBar} />
           <nav className={styles.nav}>
-            <div className={styles.logoContainer}>
-              <Link to="/" className={styles.logoLink}>
-                <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
-              </Link>
+            <div className={styles.navRow}>
+              <div className={styles.logoContainer}>
+                <Link to="/" className={styles.logoLink}>
+                  <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
+                </Link>
+              </div>
+
+              <button
+                className={styles.hamburger}
+                onClick={() => setMenuOpen((prev) => !prev)}
+                aria-label="Menú"
+              >
+                <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+                <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+                <span className={`${styles.hamburgerLine} ${menuOpen ? styles.hamburgerOpen : ''}`} />
+              </button>
             </div>
-            <ul className={styles.navLinks}>
+
+            <ul className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ''}`}>
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.to}>{link.label}</Link>
+                  <Link to={link.to} onClick={() => setMenuOpen(false)}>{link.label}</Link>
                 </li>
               ))}
             </ul>

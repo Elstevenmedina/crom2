@@ -115,6 +115,12 @@
   .columns {
     flex-direction: column;
     gap: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .linkList {
+    align-items: center;
   }
 
   .bottom {
@@ -128,6 +134,19 @@
 }
 
 @media (max-width: 480px) {
+  .footer {
+    padding: 2rem 1.25rem 1.25rem;
+  }
+
+  .columnTitle {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .linkList li a {
+    font-size: 0.9rem;
+  }
+
   .contactInfo {
     flex-direction: column;
     gap: 0.75rem;

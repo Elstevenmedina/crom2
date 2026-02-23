@@ -137,6 +137,23 @@
 }
 
 @media (max-width: 768px) {
+    .hero {
+        height: 50vh;
+        min-height: 350px;
+    }
+
+    .title {
+        font-size: 2.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .contactOptions {
+        padding: 3rem 1.5rem;
+    }
+
     .optionsContainer {
         flex-direction: column;
         gap: 3rem;
@@ -146,7 +163,6 @@
     .contactCard {
         width: 100%;
         border-right: none !important;
-        /* Remove vertical border */
         border-bottom: 1px solid #ccc;
         padding-bottom: 3rem;
         padding-right: 0;
@@ -156,6 +172,59 @@
     .contactCard:last-child {
         border-bottom: none;
         padding-bottom: 0;
+    }
+
+    .contactTitle {
+        font-size: 1.5rem;
+    }
+
+    .contactLink {
+        font-size: 1.2rem;
+    }
+
+    .formSection {
+        padding: 3rem 1rem;
+    }
+
+    .formTitle {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 45vh;
+        min-height: 300px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .heroContent {
+        padding: 0 1rem;
+    }
+
+    .contactIcon {
+        width: 70px;
+        max-height: 70px;
+    }
+
+    .contactTitle {
+        font-size: 1.3rem;
+    }
+
+    .contactText {
+        font-size: 0.95rem;
+    }
+
+    .submitBtn {
+        padding: 0.7rem 2rem;
+        font-size: 1rem;
     }
 }
 
@@ -328,5 +397,36 @@
         gap: 1.5rem;
         text-align: center;
         margin: 2rem -2rem -2rem;
+    }
+
+    .formCard {
+        border-radius: 20px;
+    }
+
+    .formFooterInline {
+        border-radius: 0 0 20px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .formBody {
+        padding: 1.5rem;
+    }
+
+    .formFooterInline {
+        margin: 2rem -1.5rem -1.5rem;
+        padding: 1.5rem;
+    }
+
+    .footerText {
+        font-size: 0.95rem;
+    }
+
+    .formCard {
+        border-radius: 16px;
+    }
+
+    .formFooterInline {
+        border-radius: 0 0 16px 16px;
     }
 }

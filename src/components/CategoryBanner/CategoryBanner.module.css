@@ -81,40 +81,50 @@
   .section {
     flex-direction: column;
     min-height: auto;
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 
   .left {
-    min-height: 300px;
+    min-height: 250px;
+    max-height: 300px;
   }
 
   .imagePlaceholder {
-    min-height: 300px;
+    min-height: 250px;
   }
 
   .right {
-    padding: 2.5rem 2rem;
+    padding: 2rem 1.5rem;
   }
 
   .title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 480px) {
   .section {
-    margin-top: 3rem;
+    margin-top: 2rem;
+  }
+
+  .left {
+    min-height: 200px;
+    max-height: 250px;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .right {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1.25rem;
   }
 }

@@ -86,21 +86,52 @@
 @media (max-width: 768px) {
   .hero {
     height: 60vh;
-    min-height: 500px;
+    min-height: 400px;
+    padding-left: 0;
+    justify-content: center;
+  }
+
+  .hero::after {
+    top: 140px;
+  }
+
+  .heroContent {
+    text-align: center;
+    margin-top: 10%;
+    padding: 0 1.5rem;
   }
 
   .title {
     font-size: 2.8rem;
+    max-width: 100%;
   }
 
   .description {
     font-size: 1rem;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    min-height: 350px;
+  }
+
+  .hero::after {
+    top: 120px;
+  }
+
+  .heroContent {
+    margin-top: 15%;
+  }
+
   .title {
     font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
   }
 }
 
@@ -214,23 +245,44 @@
    ============================================= */
 @media (max-width: 900px) {
   .expansion {
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 1.5rem 3rem;
   }
 
   .expansionContent {
     flex-direction: column;
     text-align: center;
-    gap: 2rem;
+    gap: 0;
+  }
+
+  .kidImageWrapper {
+    margin-top: 0;
+    margin-bottom: 0rem;
+    z-index: 2;
   }
 
   .expansionCard {
     text-align: left;
-    padding: 2rem;
+    padding: 3rem 2rem 2rem;
     max-width: 100%;
+    z-index: 1;
   }
 
   .kidImage {
     max-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .purpose {
+    padding: 3rem 1.5rem;
+  }
+
+  .purposeTitle {
+    font-size: 1.6rem;
+  }
+
+  .purposeText {
+    font-size: 1rem;
   }
 }
 
@@ -515,15 +567,26 @@
     transform: none;
     margin-top: 0;
     margin-left: 0;
+    width: 100%;
+  }
+
+  .expImgWrapper {
+    border-radius: 20px;
   }
 
   .expImgFirst,
   .expImgSecond {
     height: 250px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .expTitle {
     white-space: normal;
+  }
+
+  .expText {
+    font-size: 1rem;
   }
 }
 
@@ -616,6 +679,30 @@
 
   .productTitle {
     font-size: 1.6rem;
+  }
+
+  .productSubtitle {
+    font-size: 1rem;
+  }
+
+  .productButton {
+    font-size: 1.3rem;
+    padding: 0.5rem 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .productTitle {
+    font-size: 1.3rem;
+  }
+
+  .productSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .productButton {
+    font-size: 1.1rem;
+    padding: 0.5rem 2rem;
   }
 }
 
