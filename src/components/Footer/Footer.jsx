@@ -10,7 +10,7 @@ function Footer() {
         <div className={styles.column}>
           <h4 className={styles.columnTitle}>AYUDA</h4>
           <ul className={styles.linkList}>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><Link to="/contacto">Contacto</Link></li>
             <li><Link to="/faq">Preguntas frecuentes</Link></li>
           </ul>
         </div>
@@ -32,8 +32,8 @@ function Footer() {
         <div className={styles.column}>
           <h4 className={styles.columnTitle}>ACERCA DE CROM</h4>
           <ul className={styles.linkList}>
-            <li><a href="#nosotros">Sobre Crom</a></li>
-            <li><a href="#trabaja">Trabaja con nosotros</a></li>
+            <li><Link to="/nosotros">Sobre Crom</Link></li>
+            <li><Link to="/contacto">Trabaja con nosotros</Link></li>
           </ul>
         </div>
       </div>

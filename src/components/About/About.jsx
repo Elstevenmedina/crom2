@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import styles from './About.module.css'
 
 const fadeInUp = {
@@ -83,14 +84,12 @@ function About() {
         </motion.div>
 
         <motion.div variants={fadeInUp}>
-          <motion.a
-            href="#nosotros"
+          <Link
+            to="/nosotros"
             className={styles.cta}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             CONOCE MÁS
-          </motion.a>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

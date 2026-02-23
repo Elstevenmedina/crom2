@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import styles from './Features.module.css'
 
 const collections = [
@@ -73,14 +74,12 @@ function Features() {
         </motion.div>
 
         <motion.div variants={textVariants}>
-          <motion.a
-            href="#colecciones"
+          <Link
+            to="/productos?categoria=bolsos"
             className={styles.cta}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             VER MÁS
-          </motion.a>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

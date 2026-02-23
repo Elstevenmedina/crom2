@@ -432,6 +432,21 @@
     background: rgba(205, 37, 37, 0.1);
   }
 
+  /* Menú mobile en nav blanco: fondo blanco + letras negras */
+  .navWhite .navLinks {
+    background: #ffffff;
+  }
+
+  .navWhite .navLinks li a,
+  .navWhite .navLinks li a:any-link {
+    color: #000000;
+  }
+
+  .navWhite .navLinks li a:hover {
+    background: rgba(205, 37, 37, 0.08);
+    color: #cd2525;
+  }
+
   .logo {
     width: 40px;
     height: 40px;

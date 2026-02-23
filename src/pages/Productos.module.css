@@ -1,9 +1,10 @@
 .pageContainer {
-    padding: 2rem 0;
+    padding: 2rem 2rem;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     min-height: 80vh;
+    box-sizing: border-box;
 }
 
 /* Header: Title and Toolbar */
@@ -383,21 +384,30 @@
     .productGrid {
         grid-template-columns: repeat(3, 1fr);
     }
-
-    .pageContainer {
-        padding: 2rem 1.5rem;
-    }
 }
 
 @media (max-width: 768px) {
+    .pageContainer {
+        padding: 1.5rem 1rem;
+    }
+
     .productGrid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+        gap: 1rem;
+    }
+
+    .productCard {
+        aspect-ratio: auto;
+        padding: 1rem;
+    }
+
+    .productImage {
+        max-height: 160px;
     }
 
     .content {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .sidebar {
@@ -426,14 +436,17 @@
         font-size: 1.5rem;
     }
 
-    .modalContent {
-        padding: 1.5rem;
-        border-radius: 16px;
-        margin: 1rem;
+    .titleWrapper {
+        padding-right: 1rem;
     }
 
     .modalOverlay {
-        padding: 1rem;
+        padding: 0.75rem;
+    }
+
+    .modalContent {
+        padding: 1.5rem;
+        border-radius: 16px;
     }
 
     .modalTitle {
@@ -443,43 +456,72 @@
     .modalCode {
         font-size: 0.95rem;
     }
+
+    .modalImage {
+        max-height: 45vh;
+    }
 }
 
 @media (max-width: 480px) {
-    .productGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+    .pageContainer {
+        padding: 1rem 0.75rem;
     }
 
-    .pageContainer {
-        padding: 1.5rem 1rem;
+    .productGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
     }
 
     .productCard {
-        padding: 1rem;
+        padding: 0.75rem;
     }
 
     .productImage {
-        max-height: 140px;
+        max-height: 120px;
+    }
+
+    .productName {
+        font-size: 0.75rem;
+    }
+
+    .productCode {
+        font-size: 0.65rem;
     }
 
     .pageTitle {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .titleWrapper {
-        padding-right: 1rem;
+        padding-right: 0.5rem;
+        border-bottom-width: 2px;
     }
 
     .modalContent {
-        padding: 1.25rem;
+        padding: 1rem;
+        border-radius: 12px;
     }
 
     .modalImage {
-        max-height: 40vh;
+        max-height: 35vh;
     }
 
     .modalTitle {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
+    }
+
+    .modalCode {
+        font-size: 0.85rem;
+    }
+
+    .modalClose {
+        top: 10px;
+        right: 12px;
+        font-size: 1.4rem;
+    }
+
+    .loadMoreBtn {
+        padding: 10px 24px;
+        font-size: 0.85rem;
     }
 }

@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import Home from './pages/Home'
@@ -11,6 +12,14 @@ import Seed from './components/Admin/Seed'
 import ProtectedRoute from './components/Admin/ProtectedRoute'
 import Dashboard from './components/Admin/Dashboard'
 import './App.css'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 
 function PublicLayout({ children }) {
   return (
@@ -25,6 +34,7 @@ function PublicLayout({ children }) {
 function App() {
   return (
     <div className="app">
+      <ScrollToTop />
       <Routes>
         {/* Páginas públicas con Navbar + Footer */}
         <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />

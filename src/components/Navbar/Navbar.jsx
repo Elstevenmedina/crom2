@@ -60,7 +60,7 @@ function Navbar() {
         {/* Franja roja con mensaje */}
         <div className={styles.promoBanner}>
           <span className={styles.promoText}>TU OPINIÓN IMPORTA</span>
-          <a href="#detalles" className={styles.promoBtn}>DETALLES</a>
+          <Link to="/contacto" className={styles.promoBtn}>DETALLES</Link>
         </div>
 
         {/* Logo */}

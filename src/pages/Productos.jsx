@@ -33,6 +33,16 @@ function Productos() {
     const [totalCount, setTotalCount] = useState(0)
     const [selectedProduct, setSelectedProduct] = useState(null)
 
+    // Bloquear scroll cuando el modal está abierto
+    useEffect(() => {
+        if (selectedProduct) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => { document.body.style.overflow = '' }
+    }, [selectedProduct])
+
     // Fetch productos según categoría activa
     useEffect(() => {
         const fetchProducts = async () => {
