@@ -15,20 +15,7 @@ function Footer() {
           </ul>
         </div>
 
-        {/* INFORMACIÓN LEGAL */}
-        <div className={styles.column}>
-          <h4 className={styles.columnTitle}>INFORMACIÓN LEGAL</h4>
-          <ul className={styles.linkList}>
-            <li><a href="#privacidad">Política de privacidad</a></li>
-            <li><a href="#cookies">Política de cookies</a></li>
-            <li><a href="#rgpd">Cumplimiento del RGPD</a></li>
-            <li><a href="#terminos">Términos y condiciones</a></li>
-            <li><a href="#accesibilidad">Accesibilidad</a></li>
-            <li><a href="#canal">Canal interno de información</a></li>
-          </ul>
-        </div>
-
-        {/* ACERCA DE CROM */}
+{/* ACERCA DE CROM */}
         <div className={styles.column}>
           <h4 className={styles.columnTitle}>ACERCA DE CROM</h4>
           <ul className={styles.linkList}>
