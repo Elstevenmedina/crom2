@@ -6,19 +6,15 @@ import styles from './Navbar.module.css'
 const slides = [
   {
     id: 1,
-    image: '/assets/Home/hero_image.png',
+    image: '/assets/Home/banner_1.png',
   },
   {
     id: 2,
-    title: 'Bolso CROM Urban',
-    subtitle: 'Diseño urbano con máxima capacidad',
-    category: 'BOLSOS',
+    image: '/assets/Home/banner_2.png',
   },
   {
     id: 3,
-    title: 'Lonchera CROM Kids',
-    subtitle: 'Práctica, térmica y divertida',
-    category: 'LONCHERAS',
+    image: '/assets/Home/banner_3.png',
   },
 ]
 
