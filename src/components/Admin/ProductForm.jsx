@@ -7,6 +7,7 @@ const FIXED_CATEGORIES = [
   { value: 'cartucheras', label: 'Cartucheras' },
   { value: 'mochilas', label: 'Mochilas' },
   { value: 'loncheras', label: 'Loncheras' },
+  { value: 'maletas', label: 'Maletas de viaje' },
 ]
 
 function ProductForm({ product, onSave, onCancel }) {

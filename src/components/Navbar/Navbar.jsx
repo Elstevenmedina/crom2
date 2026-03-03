@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from './Navbar.module.css'
@@ -19,10 +19,8 @@ const slides = [
 ]
 
 const navLinks = [
-  { label: 'BOLSOS', to: '/productos?categoria=bolsos' },
-  { label: 'CARTUCHERAS', to: '/productos?categoria=cartucheras' },
-  { label: 'MOCHILAS', to: '/productos?categoria=mochilas' },
-  { label: 'LONCHERAS', to: '/productos?categoria=loncheras' },
+  { label: 'INICIO', to: '/' },
+  { label: 'PRODUCTOS', to: '/productos' },
   { label: 'NOSOTROS', to: '/nosotros' },
   { label: 'CONTACTO', to: '/contacto' },
 ]
@@ -37,9 +35,16 @@ function Navbar() {
     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
   }
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
-  }
+  }, [])
+
+  // Auto-slide cada 5 segundos
+  useEffect(() => {
+    if (!isHome) return
+    const timer = setInterval(nextSlide, 5000)
+    return () => clearInterval(timer)
+  }, [isHome, nextSlide])
 
   /* ---- Header para páginas internas (Nosotros, etc.) ---- */
   if (!isHome) {

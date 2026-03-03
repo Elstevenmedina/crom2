@@ -32,11 +32,6 @@ const headerAnim = {
     visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: "easeOut" } }
 }
 
-const searchAnim = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.7, delay: 0.2, ease: "easeOut" } }
-}
-
 // Stagger para que las preguntas bajen como dominó
 const listStagger = {
     hidden: { opacity: 0 },
@@ -56,16 +51,10 @@ const itemStagger = {
 
 function FAQ() {
     const [openId, setOpenId] = useState(null)
-    const [searchQuery, setSearchQuery] = useState('')
 
     const toggleFAQ = (id) => {
         setOpenId(openId === id ? null : id)
     }
-
-    const filteredFaq = faqData.filter((item) =>
-        item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.answer.toLowerCase().includes(searchQuery.toLowerCase())
-    )
 
     return (
         <div className={styles.pageContainer} style={{ overflowX: 'hidden' }}>
@@ -84,33 +73,19 @@ function FAQ() {
                 <h1 className={styles.pageTitle}>CENTRO DE AYUDA</h1>
             </motion.div>
 
-            {/* Buscador y Hero */}
+            {/* Hero con imagen */}
             <motion.div
                 className={styles.heroWrapper}
                 initial="hidden"
                 animate="visible"
-                variants={searchAnim}
+                variants={headerAnim}
             >
                 <div className={styles.bgImage} />
-                <div className={styles.content}>
-                    <h2 className={styles.searchLabel}>Buscador</h2>
-                    <motion.input
-                        type="text"
-                        className={styles.searchInput}
-                        placeholder="Buscar pregunta..."
-                        value={searchQuery}
-                        whileFocus={{ scale: 1.02, boxShadow: "0px 0px 15px rgba(255, 0, 0, 0.4)" }}
-                        onChange={(e) => {
-                            setSearchQuery(e.target.value)
-                            setOpenId(null)
-                        }}
-                    />
-                </div>
             </motion.div>
 
             {/* Lista FAQ (El Acordeón) */}
             <div className={styles.faqSection}>
-                {filteredFaq.length > 0 ? (
+                {faqData.length > 0 ? (
                     <motion.div
                         className={styles.faqGrid}
                         initial="hidden"
@@ -118,7 +93,7 @@ function FAQ() {
                         viewport={{ once: true, margin: "-50px" }}
                         variants={listStagger}
                     >
-                        {filteredFaq.map((item) => (
+                        {faqData.map((item) => (
                             <motion.div
                                 variants={itemStagger}
                                 key={item.id}
@@ -153,15 +128,7 @@ function FAQ() {
                             </motion.div>
                         ))}
                     </motion.div>
-                ) : (
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className={styles.noResults}
-                    >
-                        No se encontraron resultados para "{searchQuery}"
-                    </motion.p>
-                )}
+                ) : null}
             </div>
         </div>
     )

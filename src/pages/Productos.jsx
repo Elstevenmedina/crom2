@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 import styles from './Productos.module.css'
 
 const categories = [
-    { key: 'bolsos', label: 'BOLSOS', title: 'BOLSOS' },
-    { key: 'cartucheras', label: 'CARTUCHERAS', title: 'CARTUCHERAS' },
-    { key: 'mochilas', label: 'MOCHILAS', title: 'MOCHILAS' },
-    { key: 'loncheras', label: 'LONCHERAS', title: 'LONCHERAS' },
+    { key: 'cartucheras', label: 'Cartucheras' },
+    { key: 'mochilas', label: 'Mochilas' },
+    { key: 'loncheras', label: 'Loncheras' },
+    { key: 'bolsos', label: 'Bolsos escolares' },
+    { key: 'maletas', label: 'Maletas de viaje' },
 ]
 
 const AVAILABLE_COLORS = [
@@ -25,7 +26,7 @@ const ITEMS_PER_PAGE = 16
 
 function Productos() {
     const [searchParams] = useSearchParams()
-    const activeCategory = searchParams.get('categoria') || 'bolsos'
+    const activeCategory = searchParams.get('categoria') || null
 
     const [products, setProducts] = useState([])
 
@@ -62,7 +63,10 @@ function Productos() {
                 .from('products')
                 .select('*', { count: 'exact', head: true })
                 .eq('is_active', true)
-                .eq('category', activeCategory)
+
+            if (activeCategory) {
+                countQuery = countQuery.eq('category', activeCategory)
+            }
 
             const { count } = await countQuery
             setTotalCount(count || 0)
@@ -72,7 +76,10 @@ function Productos() {
                 .from('products')
                 .select('*')
                 .eq('is_active', true)
-                .eq('category', activeCategory)
+
+            if (activeCategory) {
+                dataQuery = dataQuery.eq('category', activeCategory)
+            }
 
             const { data, error } = await dataQuery
                 .order('created_at', { ascending: false })
@@ -102,7 +109,10 @@ function Productos() {
             .from('products')
             .select('*')
             .eq('is_active', true)
-            .eq('category', activeCategory)
+
+        if (activeCategory) {
+            query = query.eq('category', activeCategory)
+        }
 
         const { data, error } = await query
             .order('created_at', { ascending: false })
@@ -114,24 +124,39 @@ function Productos() {
         }
     }
 
-    const currentCat = categories.find((c) => c.key === activeCategory) || categories[0]
+    const currentCat = categories.find((c) => c.key === activeCategory)
     const hasMore = products.length < totalCount
 
     return (
         <div className={styles.pageContainer}>
             <SEO
-                title={`${currentCat?.title || 'Productos'} - Cat\u00e1logo`}
-                description={`Explora nuestra colecci\u00f3n de ${(currentCat?.title || 'productos').toLowerCase()} CROM. Dise\u00f1os resistentes, funcionales y con estilo para estudiantes y familias.`}
-                path={`/productos?categoria=${activeCategory}`}
+                title={`${currentCat?.label || 'Productos'} - Cat\u00e1logo`}
+                description={`Explora nuestra colecci\u00f3n de ${(currentCat?.label || 'productos').toLowerCase()} CROM. Dise\u00f1os resistentes, funcionales y con estilo para estudiantes y familias.`}
+                path={`/productos${activeCategory ? `?categoria=${activeCategory}` : ''}`}
             />
-            {/* Header and Controls */}
+            {/* Header */}
             <div className={styles.topSection}>
                 <div className={styles.titleWrapper}>
-                    <h1 className={styles.pageTitle}>{currentCat?.title || 'PRODUCTOS'}</h1>
+                    <h1 className={styles.pageTitle}>PRODUCTOS</h1>
                 </div>
             </div>
 
             <div className={styles.content}>
+                {/* Sidebar de categorías */}
+                <aside className={styles.sidebar}>
+                    <nav className={styles.categoryNav}>
+                        {categories.map((cat) => (
+                            <Link
+                                key={cat.key}
+                                to={activeCategory === cat.key ? '/productos' : `/productos?categoria=${cat.key}`}
+                                className={`${styles.categoryItem} ${activeCategory === cat.key ? styles.categoryItemActive : ''}`}
+                            >
+                                {cat.label}
+                            </Link>
+                        ))}
+                    </nav>
+                </aside>
+
                 {/* Product Grid */}
                 <main className={styles.productGrid}>
                     {loading ? (

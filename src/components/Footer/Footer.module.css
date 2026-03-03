@@ -5,24 +5,40 @@
   background: #cd2525;
   color: #ffffff;
   padding: 3.5rem 4rem 2rem;
-  /* Textura punteada sutil */
   background-image:
     radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
   background-size: 12px 12px;
 }
 
-/* ---- Columnas ---- */
-.columns {
+/* ---- Layout principal: 3 columnas ---- */
+.main {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 3rem;
   max-width: 1200px;
-  margin: 0 auto;
-  margin-bottom: 3rem;
+  margin: 0 auto 3rem;
+  gap: 2rem;
 }
 
-.column {
+/* Logo (izquierda) */
+.logoCol {
   flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+}
+
+/* Links (centro) */
+.linksCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .columnTitle {
@@ -52,45 +68,21 @@
   text-decoration: underline;
 }
 
-/* ---- Línea separadora ---- */
-.divider {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 1.5rem;
-  height: 3px;
-  background: #ffffff;
-}
-
-/* ---- Barra inferior ---- */
-.bottom {
+/* Contacto (derecha) */
+.contactCol {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 1rem;
-}
-
-.copyright {
-  font-size: 0.85rem;
-  opacity: 0.85;
-}
-
-/* Info de contacto */
-.contactInfo {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
 }
 
 .contactItem {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   transition: opacity 0.2s ease;
 }
 
@@ -99,9 +91,26 @@
 }
 
 .contactIcon {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
+}
+
+/* ---- Línea separadora ---- */
+.divider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  height: 2px;
+  background: #ffffff;
+}
+
+/* ---- Copyright ---- */
+.copyright {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* =============================================
@@ -112,30 +121,33 @@
     padding: 2.5rem 2rem 1.5rem;
   }
 
-  .columns {
+  .main {
     flex-direction: column;
-    gap: 2rem;
     align-items: center;
     text-align: center;
+    gap: 2.5rem;
   }
 
-  .linkList {
-    align-items: center;
-  }
-
-  .bottom {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .contactInfo {
+  .logoCol {
     justify-content: center;
+  }
+
+  .contactCol {
+    align-items: center;
+  }
+
+  .copyright {
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
   .footer {
     padding: 2rem 1.25rem 1.25rem;
+  }
+
+  .logo {
+    max-width: 160px;
   }
 
   .columnTitle {
@@ -147,12 +159,12 @@
     font-size: 0.9rem;
   }
 
-  .contactInfo {
-    flex-direction: column;
-    gap: 0.75rem;
+  .contactItem {
+    font-size: 0.85rem;
   }
 
-  .contactItem {
-    font-size: 0.8rem;
+  .contactIcon {
+    width: 24px;
+    height: 24px;
   }
 }
