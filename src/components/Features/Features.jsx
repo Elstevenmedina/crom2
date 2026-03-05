@@ -4,19 +4,23 @@ import styles from './Features.module.css'
 
 const collections = [
   {
-    name: 'Bolsos',
+    name: 'Maletas de viaje',
+    category: 'maletas',
     image: '/assets/Home/ellipse_1.png',
   },
   {
-    name: 'Mochilas',
+    name: 'Bolsos escolares',
+    category: 'bolsos',
     image: '/assets/Home/ellipse_2.png',
   },
   {
     name: 'Cartucheras',
+    category: 'cartucheras',
     image: '/assets/Home/ellipse_3.png',
   },
   {
-    name: 'Loncheras',
+    name: 'Mochilas',
+    category: 'mochilas',
     image: '/assets/Home/ellipse_4.png',
   },
 ]
@@ -55,21 +59,22 @@ function Features() {
 
         <motion.div variants={containerVariants} className={styles.grid}>
           {collections.map((item) => (
-            <motion.a
+            <motion.div
               variants={itemVariants}
               key={item.name}
-              href={`#${item.name.toLowerCase()}`}
               className={styles.item}
               whileHover={{ scale: 1.05, y: -5 }}
             >
-              <div className={styles.circle}>
-                {item.image ? (
-                  <img src={item.image} alt={item.name} className={styles.productImg} />
-                ) : (
-                  <span className={styles.placeholder}>{item.name.charAt(0)}</span>
-                )}
-              </div>
-            </motion.a>
+              <Link to={`/productos?categoria=${item.category}`}>
+                <div className={styles.circle}>
+                  {item.image ? (
+                    <img src={item.image} alt={item.name} className={styles.productImg} />
+                  ) : (
+                    <span className={styles.placeholder}>{item.name.charAt(0)}</span>
+                  )}
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </motion.div>
 

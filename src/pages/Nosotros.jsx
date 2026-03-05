@@ -111,7 +111,7 @@ function Nosotros() {
             >
               <p>
                 Con el paso del tiempo, Crom amplió su portafolio para ofrecer una propuesta integral
-                que incluye mochilas, loncheras y bolsos escolares, diseñados para responder a las
+                que incluye mochilas, loncheras, cartucheras, bolsos escolares, bolsos de viaje y más diseñados para responder a las
                 necesidades reales de estudiantes, familias y usuarios activos.
               </p>
             </motion.div>
@@ -169,7 +169,13 @@ function Nosotros() {
 
           <div className={styles.diffCards}>
             {/* Card 1 */}
-            <motion.div variants={staggerItem} className={`${styles.diffCard} ${styles.diffCardLight}`}>
+            <motion.div
+              variants={staggerItem}
+              className={styles.diffCard}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
               <div className={styles.diffIconWrapper}>
                 <img src="/assets/Nosotros/flecha.png" alt="Estándar alto" className={styles.diffIcon} />
               </div>
@@ -178,7 +184,13 @@ function Nosotros() {
             </motion.div>
 
             {/* Card 2 */}
-            <motion.div variants={staggerItem} className={`${styles.diffCard} ${styles.diffCardMid}`}>
+            <motion.div
+              variants={staggerItem}
+              className={styles.diffCard}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
               <div className={styles.diffIconWrapper}>
                 <img src="/assets/Nosotros/palanca-de-control copia.png" alt="Control directo" className={styles.diffIcon} />
               </div>
@@ -187,7 +199,13 @@ function Nosotros() {
             </motion.div>
 
             {/* Card 3 */}
-            <motion.div variants={staggerItem} className={`${styles.diffCard} ${styles.diffCardSoft}`}>
+            <motion.div
+              variants={staggerItem}
+              className={styles.diffCard}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
               <div className={styles.diffIconWrapper}>
                 <img src="/assets/Nosotros/insignia.png" alt="Mejora continua" className={styles.diffIcon} />
               </div>
@@ -217,7 +235,7 @@ function Nosotros() {
             </motion.div>
             <motion.div variants={fadeInRight} className={styles.expTextBlock}>
               <p className={styles.expText}>
-                Crom cuenta hoy con un alcance internacional, con presencia en los mismos países donde opera Bebesitos, lo que le permite atender distintos mercados de la región con eficiencia y consistencia.
+                Crom cuenta hoy con un alcance internacional, con presencia en más de 18 países, lo que le permite atender distintos mercados de la región con eficiencia y consistencia.
               </p>
             </motion.div>
             <motion.div variants={fadeInRight} className={styles.expTextBlock}>
@@ -270,7 +288,7 @@ function Nosotros() {
 
           <p className={styles.actualityDesc}>
             Experimentada y con visión regional, elegida por clientes y aliados comerciales<br />
-            que buscan mochilas, loncheras y bolsos escolares bien<br />
+            que buscan mochilas, loncheras, bolsos escolares, cartucheras, maletas de viaje y más, bien<br />
             diseñados, duraderos y respaldados por una trayectoria comprobada.
           </p>
 

@@ -321,7 +321,7 @@
 }
 
 .diffTitle {
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   font-weight: 800;
   color: #e00000;
   line-height: 1.2;
@@ -343,7 +343,7 @@
 .diffCards {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 2rem;
 }
 
@@ -351,26 +351,21 @@
   flex: 1;
   max-width: 280px;
   border-radius: 30px;
-  padding: 2.5rem 1.8rem 2.5rem;
+  padding: 2.5rem 1.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   color: #ffffff;
-}
-
-.diffCardLight {
   background: #ff4d4d;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.diffCardMid {
+.diffCard:hover,
+.diffCard:active {
   background: #e00000;
-  padding-top: 3.5rem;
-  padding-bottom: 3.5rem;
-}
-
-.diffCardSoft {
-  background: #ff8a8a;
+  box-shadow: 0 8px 30px rgba(224, 0, 0, 0.35);
 }
 
 .diffIconWrapper {

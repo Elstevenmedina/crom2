@@ -169,7 +169,7 @@ function Contacto() {
                     <h1 className={styles.title}>Contáctanos</h1>
                     <p className={styles.subtitle}>
                         ¿Necesitas información sobre morrales, distribución o alianzas comerciales?<br />
-                        Escríbenos y te respondemos en 24 horas.
+                        Escríbenos y te respondemos de inmediato.
                     </p>
                 </div>
             </motion.section>
@@ -252,8 +252,8 @@ function Contacto() {
                 >
                     <div className={styles.formBody}>
                         <motion.h2 variants={inputPop} className={styles.formTitle}>
-                            Forma parte de nuestros<br />
-                            distribuidores internacionales
+                            Forma parte<br />
+                            de nuestro equipo
                         </motion.h2>
 
                         {status.text && (
@@ -351,7 +351,7 @@ function Contacto() {
 
                             <motion.div variants={inputPop} className={styles.formFooterInline}>
                                 <p className={styles.footerText}>
-                                    Te respondemos en máximo 24 horas<br />
+                                    Te respondemos de inmediato<br />
                                     con toda la información.
                                 </p>
                                 <motion.button
