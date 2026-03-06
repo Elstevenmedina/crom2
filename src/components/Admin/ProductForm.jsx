@@ -19,6 +19,8 @@ function ProductForm({ product, onSave, onCancel }) {
   const [isActive, setIsActive] = useState(true)
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState('')
+  const [features, setFeatures] = useState([])
+  const [newFeature, setNewFeature] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -29,8 +31,28 @@ function ProductForm({ product, onSave, onCancel }) {
       setCategory(product.category || '')
       setIsActive(product.is_active ?? true)
       setImagePreview(product.image_url || '')
+      setFeatures(product.features || [])
     }
   }, [product])
+
+  const addFeature = () => {
+    const trimmed = newFeature.trim()
+    if (trimmed && !features.includes(trimmed)) {
+      setFeatures([...features, trimmed])
+      setNewFeature('')
+    }
+  }
+
+  const removeFeature = (index) => {
+    setFeatures(features.filter((_, i) => i !== index))
+  }
+
+  const handleFeatureKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      addFeature()
+    }
+  }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -75,6 +97,7 @@ function ProductForm({ product, onSave, onCancel }) {
         category: category || null,
         is_active: isActive,
         image_url: imageUrl,
+        features,
       }
 
       if (isEditing) {
@@ -219,6 +242,35 @@ function ProductForm({ product, onSave, onCancel }) {
               </label>
             )}
           </div>
+        </div>
+
+        <div className={styles.featuresSection}>
+          <label className={styles.label}>Características del producto</label>
+          <div className={styles.featureInput}>
+            <input
+              type="text"
+              value={newFeature}
+              onChange={(e) => setNewFeature(e.target.value)}
+              onKeyDown={handleFeatureKeyDown}
+              className={styles.input}
+              placeholder="Ej: Mosquitero, Ruedas con freno..."
+            />
+            <button type="button" onClick={addFeature} className={styles.addFeatureBtn}>
+              Agregar
+            </button>
+          </div>
+          {features.length > 0 && (
+            <ul className={styles.featureList}>
+              {features.map((feat, i) => (
+                <li key={i} className={styles.featureItem}>
+                  <span>{feat}</span>
+                  <button type="button" onClick={() => removeFeature(i)} className={styles.removeFeatureBtn}>
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className={styles.actions}>

@@ -167,44 +167,38 @@ function Productos() {
                         </div>
                     ) : (
                         <>
-                            {products.map((product) => (
-                                <motion.div
-                                    key={product.id}
-                                    className={styles.productCard}
-                                    onClick={() => setSelectedProduct(product)}
-                                    layoutId={`product-${product.id}`}
-                                >
-                                    <motion.img
-                                        src={product.image_url || '/assets/Home/cartuchera.png'}
-                                        alt={product.name || 'Producto'}
-                                        className={styles.productImage}
-                                        layoutId={`image-${product.id}`}
-                                    />
-                                    {product.name && (
+                            {products.map((product) => {
+                                const catLabel = categories.find((c) => c.key === product.category)?.label || product.category
+                                return (
+                                    <motion.div
+                                        key={product.id}
+                                        className={styles.productCard}
+                                        onClick={() => setSelectedProduct(product)}
+                                        layoutId={`product-${product.id}`}
+                                    >
+                                        <div className={styles.productImageWrap}>
+                                            <motion.img
+                                                src={product.image_url || '/assets/Home/cartuchera.png'}
+                                                alt={product.name || 'Producto'}
+                                                className={styles.productImage}
+                                                layoutId={`image-${product.id}`}
+                                            />
+                                        </div>
                                         <div className={styles.productInfo}>
-                                            <p className={styles.productName}>{product.name}</p>
-                                            {product.code && (
-                                                <p className={styles.productCode}>{product.code}</p>
-                                            )}
-                                            {product.colors && product.colors.length > 0 && (
-                                                <div className={styles.productColors}>
-                                                    {product.colors.map((c) => {
-                                                        const colorData = AVAILABLE_COLORS.find((ac) => ac.value === c)
-                                                        return colorData ? (
-                                                            <span
-                                                                key={c}
-                                                                className={styles.productColorDot}
-                                                                style={{ background: colorData.hex }}
-                                                                title={colorData.label}
-                                                            ></span>
-                                                        ) : null
-                                                    })}
-                                                </div>
+                                            <div className={styles.productDivider}></div>
+                                            {catLabel && <p className={styles.productCategory}>{catLabel}</p>}
+                                            {product.code && <p className={styles.productCode}><strong>{product.code}</strong></p>}
+                                            {product.features && product.features.length > 0 && (
+                                                <ul className={styles.productFeatures}>
+                                                    {product.features.map((feat, i) => (
+                                                        <li key={i} className={styles.productFeatureItem}>{feat}</li>
+                                                    ))}
+                                                </ul>
                                             )}
                                         </div>
-                                    )}
-                                </motion.div>
-                            ))}
+                                    </motion.div>
+                                )
+                            })}
 
                             {hasMore && (
                                 <div className={styles.loadMoreWrapper}>
@@ -246,7 +240,14 @@ function Productos() {
                             <div className={styles.modalInfo}>
                                 <h2 className={styles.modalTitle}>{selectedProduct.name}</h2>
                                 {selectedProduct.code && (
-                                    <p className={styles.modalCode}>COD: {selectedProduct.code}</p>
+                                    <p className={styles.modalCode}>{selectedProduct.code}</p>
+                                )}
+                                {selectedProduct.features && selectedProduct.features.length > 0 && (
+                                    <ul className={styles.modalFeatures}>
+                                        {selectedProduct.features.map((feat, i) => (
+                                            <li key={i}>{feat}</li>
+                                        ))}
+                                    </ul>
                                 )}
                             </div>
                         </motion.div>

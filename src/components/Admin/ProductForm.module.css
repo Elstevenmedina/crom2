@@ -156,6 +156,72 @@
   background: #e00000;
 }
 
+.featuresSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.featureInput {
+  display: flex;
+  gap: 8px;
+}
+
+.featureInput .input {
+  flex: 1;
+}
+
+.addFeatureBtn {
+  padding: 10px 18px;
+  background: #e00000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.addFeatureBtn:hover {
+  background: #c0392b;
+}
+
+.featureList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.removeFeatureBtn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.removeFeatureBtn:hover {
+  color: #e00000;
+}
+
 .actions {
   display: flex;
   justify-content: space-between;
