@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
+import DashboardHome from './DashboardHome'
 import ProductList from './ProductList'
 import ProductForm from './ProductForm'
 import ContactMessages from './ContactMessages'
@@ -8,6 +9,7 @@ import AdminSettings from './AdminSettings'
 import styles from './Dashboard.module.css'
 
 const tabs = [
+  { key: 'home', label: 'Inicio', icon: '🏠' },
   { key: 'products', label: 'Productos', icon: '📦' },
   { key: 'messages', label: 'Mensajes', icon: '✉️' },
   { key: 'settings', label: 'Configuración', icon: '⚙️' },
@@ -15,7 +17,7 @@ const tabs = [
 
 function Dashboard() {
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState('products')
+  const [activeTab, setActiveTab] = useState('home')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [showProductForm, setShowProductForm] = useState(false)
 
@@ -39,8 +41,21 @@ function Dashboard() {
     setSelectedProduct(null)
   }
 
+  const handleHomeNavigate = (tab, openForm = false) => {
+    setActiveTab(tab)
+    if (tab === 'products' && openForm) {
+      setSelectedProduct(null)
+      setShowProductForm(true)
+    } else {
+      setShowProductForm(false)
+      setSelectedProduct(null)
+    }
+  }
+
   const renderContent = () => {
     switch (activeTab) {
+      case 'home':
+        return <DashboardHome onNavigate={handleHomeNavigate} />
       case 'products':
         if (showProductForm) {
           return (

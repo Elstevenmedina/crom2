@@ -11,12 +11,18 @@ import Login from './components/Admin/Login'
 import Seed from './components/Admin/Seed'
 import ProtectedRoute from './components/Admin/ProtectedRoute'
 import Dashboard from './components/Admin/Dashboard'
+import { supabase } from './lib/supabase'
 import './App.css'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
+
+    // Registrar visita solo en páginas públicas
+    if (supabase && !pathname.startsWith('/admin') && pathname !== '/login' && pathname !== '/seed') {
+      supabase.from('page_views').insert({ page_path: pathname }).then()
+    }
   }, [pathname])
   return null
 }
