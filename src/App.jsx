@@ -21,7 +21,9 @@ function ScrollToTop() {
 
     // Registrar visita solo en páginas públicas
     if (supabase && !pathname.startsWith('/admin') && pathname !== '/login' && pathname !== '/seed') {
-      supabase.from('page_views').insert({ page_path: pathname }).then()
+      supabase.from('page_views').insert([{ page_path: pathname }]).then(({ error }) => {
+        if (error) console.error('Page view insert error:', error)
+      })
     }
   }, [pathname])
   return null

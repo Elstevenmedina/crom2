@@ -303,9 +303,9 @@ function Contacto() {
                                 required
                             >
                                 <option value="">Tipo de empresa*</option>
-                                <option value="retail">Retail</option>
-                                <option value="wholesale">Mayorista</option>
-                                <option value="other">Otro</option>
+                                <option value="Retail">Retail</option>
+                                <option value="Mayorista">Mayorista</option>
+                                <option value="Otro">Otro</option>
                             </motion.select>
 
                             <motion.input
