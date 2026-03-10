@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import styles from './ProductList.module.css'
 
+const CATEGORY_LABELS = {
+  bolsos: 'Mochilas escolares',
+  bolsos_viaje: 'Bolsos de viaje',
+  cartucheras: 'Cartucheras',
+  mochilas: 'Mochilas',
+  loncheras: 'Loncheras',
+  maletas: 'Maletas de viaje',
+}
+
 function ProductList({ onEdit, onAdd }) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -67,7 +76,7 @@ function ProductList({ onEdit, onAdd }) {
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productCode}>{product.code}</p>
                 {product.category && (
-                  <p className={styles.productCategory}>{product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
+                  <p className={styles.productCategory}>{CATEGORY_LABELS[product.category] || product.category}</p>
                 )}
               </div>
             </div>

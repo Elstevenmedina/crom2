@@ -9,7 +9,7 @@ const collections = [
     image: '/assets/Home/ellipse_1.png',
   },
   {
-    name: 'Bolsos escolares',
+    name: 'Mochilas escolares',
     category: 'bolsos',
     image: '/assets/Home/ellipse_2.png',
   },

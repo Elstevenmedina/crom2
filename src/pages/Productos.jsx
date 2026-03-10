@@ -9,7 +9,8 @@ const categories = [
     { key: 'cartucheras', label: 'Cartucheras' },
     { key: 'mochilas', label: 'Mochilas' },
     { key: 'loncheras', label: 'Loncheras' },
-    { key: 'bolsos', label: 'Bolsos escolares' },
+    { key: 'bolsos', label: 'Mochilas escolares' },
+    { key: 'bolsos_viaje', label: 'Bolsos de viaje' },
     { key: 'maletas', label: 'Maletas de viaje' },
 ]
 

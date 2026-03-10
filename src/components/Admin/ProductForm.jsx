@@ -3,7 +3,8 @@ import { supabase } from '../../lib/supabase'
 import styles from './ProductForm.module.css'
 
 const FIXED_CATEGORIES = [
-  { value: 'bolsos', label: 'Bolsos' },
+  { value: 'bolsos', label: 'Mochilas escolares' },
+  { value: 'bolsos_viaje', label: 'Bolsos de viaje' },
   { value: 'cartucheras', label: 'Cartucheras' },
   { value: 'mochilas', label: 'Mochilas' },
   { value: 'loncheras', label: 'Loncheras' },
