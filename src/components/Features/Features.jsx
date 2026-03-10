@@ -4,8 +4,8 @@ import styles from './Features.module.css'
 
 const collections = [
   {
-    name: 'Maletas de viaje',
-    category: 'maletas',
+    name: 'Bolsos de viaje',
+    category: 'bolsos_viaje',
     image: '/assets/Home/ellipse_1.png',
   },
   {
@@ -22,6 +22,11 @@ const collections = [
     name: 'Mochilas',
     category: 'mochilas',
     image: '/assets/Home/ellipse_4.png',
+  },
+  {
+    name: 'Maletas de viaje',
+    category: 'maletas',
+    image: '/assets/Home/ellipse_5.png',
   },
 ]
 

@@ -187,7 +187,7 @@ function Productos() {
                                         </div>
                                         <div className={styles.productInfo}>
                                             <div className={styles.productDivider}></div>
-                                            {catLabel && <p className={styles.productCategory}>{catLabel}</p>}
+                                            {product.name && <p className={styles.productCategory}>{product.name}</p>}
                                             {product.code && <p className={styles.productCode}><strong>{product.code}</strong></p>}
                                             {product.features && product.features.length > 0 && (
                                                 <ul className={styles.productFeatures}>
