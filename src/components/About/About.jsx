@@ -75,7 +75,7 @@ function About() {
               <h3>Expansión</h3>
               <p>
                 Gracias a su experiencia y estructura, Crom alcance
-                internacional con presencia en más de 18 países de
+                internacional con presencia en 15 países de
                 Centroamérica, Sudamérica y el Caribe, atendiendo
                 mercados reginales con eficiencia.
               </p>
