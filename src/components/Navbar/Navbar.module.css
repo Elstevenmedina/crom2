@@ -271,6 +271,36 @@
 }
 
 /* =============================================
+   NUEVOS ESTILOS PARA TEXTO SUPERPUESTO (IZQUIERDA)
+   ============================================= */
+.slideTextContainer {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: left;
+  max-width: 650px;
+  z-index: 2;
+  padding: 0 1rem;
+}
+
+.slideTitleLeft {
+  font-size: 4.5rem;
+  font-weight: 900;
+  margin-bottom: 0;
+  line-height: 1.1;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.slideSubtitleLeft {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+/* =============================================
    FLECHAS DE NAVEGACIÓN
    ============================================= */
 .arrow {
@@ -369,6 +399,7 @@
   border: none;
   color: inherit;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .hamburgerLine {
@@ -472,6 +503,19 @@
     font-size: 1.75rem;
   }
 
+  .slideTextContainer {
+    left: 5%;
+    max-width: 90%;
+  }
+
+  .slideTitleLeft {
+    font-size: 3rem;
+  }
+
+  .slideSubtitleLeft {
+    font-size: 1.8rem;
+  }
+
   .arrowLeft {
     left: 0.75rem;
   }
@@ -529,6 +573,14 @@
 
   .slideSubtitle {
     font-size: 0.9rem;
+  }
+
+  .slideTitleLeft {
+    font-size: 2.2rem;
+  }
+
+  .slideSubtitleLeft {
+    font-size: 1.4rem;
   }
 
   .arrow {

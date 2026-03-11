@@ -7,14 +7,20 @@ const slides = [
   {
     id: 1,
     image: '/assets/Home/banner_1.png',
+    title: 'Materiales\nque cuidan tu\ncomida,',
+    subtitle: 'diseño que simplifica\ntu vida',
   },
   {
     id: 2,
     image: '/assets/Home/banner_2.png',
+    title: 'Diseño que\nresiste,',
+    subtitle: 'estilo que te sigue',
   },
   {
     id: 3,
     image: '/assets/Home/banner_3.png',
+    title: 'Nuevos\nhorizontes,',
+    subtitle: 'la misma resistencia',
   },
 ]
 
@@ -163,7 +169,7 @@ function Navbar() {
                   transition={{ duration: 0.8, ease: "easeInOut" }}
                 >
                   <div className={styles.slideContent}>
-                    {slide.image ? (
+                    {slide.image && (
                       <motion.img
                         src={slide.image}
                         alt="CROM"
@@ -172,15 +178,34 @@ function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
                       />
-                    ) : (
+                    )}
+                    {(slide.title || slide.subtitle) && (
                       <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                        className={styles.slideTextContainer}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
                       >
-                        <span className={styles.slideCategory}>{slide.category}</span>
-                        <h2 className={styles.slideTitle}>{slide.title}</h2>
-                        <p className={styles.slideSubtitle}>{slide.subtitle}</p>
+                        {slide.title && (
+                          <h2 className={styles.slideTitleLeft}>
+                            {slide.title.split('\n').map((line, i) => (
+                              <span key={i}>
+                                {line}
+                                <br />
+                              </span>
+                            ))}
+                          </h2>
+                        )}
+                        {slide.subtitle && (
+                          <p className={styles.slideSubtitleLeft}>
+                            {slide.subtitle.split('\n').map((line, i) => (
+                              <span key={i}>
+                                {line}
+                                <br />
+                              </span>
+                            ))}
+                          </p>
+                        )}
                       </motion.div>
                     )}
                   </div>
