@@ -74,9 +74,8 @@ function About() {
             <div className={styles.featureText}>
               <h3>Expansión</h3>
               <p>
-                Gracias a su experiencia y estructura, Crom alcance
-                internacional con presencia en 15 países de
-                Centroamérica, Sudamérica y el Caribe, atendiendo
+                Gracias a su experiencia y estructura, Hoy estamos presentes
+                en 15 países y expandiéndonos, atendiendo
                 mercados reginales con eficiencia.
               </p>
             </div>
