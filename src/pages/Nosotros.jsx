@@ -235,7 +235,7 @@ function Nosotros() {
             </motion.div>
             <motion.div variants={fadeInRight} className={styles.expTextBlock}>
               <p className={styles.expText}>
-                Crom cuenta hoy con un alcance internacional, con presencia en más de 15 países y expandiéndonos, lo que le permite atender distintos mercados de la región con eficiencia y consistencia.
+                Crom cuenta hoy con un alcance internacional, con presencia en 15 países y expandiéndonos, lo que le permite atender distintos mercados de la región con eficiencia y consistencia.
               </p>
             </motion.div>
             <motion.div variants={fadeInRight} className={styles.expTextBlock}>
