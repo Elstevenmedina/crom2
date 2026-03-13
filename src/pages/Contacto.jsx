@@ -243,15 +243,17 @@ function Contacto() {
 
             {/* Banner Hamzi Group */}
             <section className={styles.hamziBannerSection}>
-                <motion.img
-                    src="/assets/contactanos/by-hamzi-group.png"
-                    alt="By Hamzi Group"
-                    className={styles.hamziBanner}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.8 }}
-                />
+                <a href="https://www.hamzisa.com" target="_blank" rel="noopener noreferrer">
+                    <motion.img
+                        src="/assets/contactanos/by-hamzi-group.png"
+                        alt="By Hamzi Group"
+                        className={styles.hamziBanner}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.8 }}
+                    />
+                </a>
             </section>
 
             {/* Formulario Distribuidores */}

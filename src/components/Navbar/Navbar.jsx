@@ -64,11 +64,7 @@ function Navbar() {
 
     return (
       <header className={`${styles.header} ${isTransparentPage ? styles.headerTransparent : ''}`}>
-        {/* Franja roja con mensaje */}
-        <div className={styles.promoBanner}>
-          <span className={styles.promoText}>TU OPINIÓN IMPORTA</span>
-          <Link to="/contacto" className={styles.promoBtn}>DETALLES</Link>
-        </div>
+
 
         {/* Logo */}
         <nav className={navClass}>

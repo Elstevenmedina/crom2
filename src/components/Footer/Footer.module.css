@@ -96,6 +96,16 @@
   flex-shrink: 0;
 }
 
+.addressText {
+  color: #ffffff;
+  font-size: 0.85rem;
+  text-align: right;
+  opacity: 0.8;
+  line-height: 1.5;
+  margin-top: 0.75rem;
+  font-style: normal;
+}
+
 /* ---- Línea separadora ---- */
 .divider {
   width: 100%;
@@ -137,6 +147,10 @@
   }
 
   .copyright {
+    text-align: center;
+  }
+
+  .addressText {
     text-align: center;
   }
 }

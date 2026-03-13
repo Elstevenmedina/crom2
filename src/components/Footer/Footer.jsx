@@ -39,6 +39,12 @@ function Footer() {
             <span>ventas@hamzisa.com</span>
             <img src="/assets/Home/email.png" alt="Email" className={styles.contactIcon} />
           </a>
+          <address className={styles.addressText}>
+            Hamzi, S.A. Zona Libre de Colón<br/>
+            Calle 16 Paseo Gorgas, Manzana 18A Edif. 42<br/>
+            Colón<br/>
+            PA.
+          </address>
         </div>
       </div>
 
