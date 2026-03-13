@@ -7,20 +7,20 @@ const slides = [
   {
     id: 1,
     image: '/assets/Home/banner_1.png',
-    title: 'Materiales\nque cuidan tu\ncomida,',
-    subtitle: 'diseño que simplifica\ntu vida',
+    textImage: '/assets/Home/text_banner_1.png',
+    altText: 'Materiales que cuidan tu comida, diseño que simplifica tu vida',
   },
   {
     id: 2,
     image: '/assets/Home/banner_2.png',
-    title: 'Diseño que\nresiste,',
-    subtitle: 'estilo que te sigue',
+    textImage: '/assets/Home/text_banner_2.png',
+    altText: 'Diseño que resiste, estilo que te sigue',
   },
   {
     id: 3,
     image: '/assets/Home/banner_3.png',
-    title: 'Nuevos\nhorizontes,',
-    subtitle: 'la misma resistencia',
+    textImage: '/assets/Home/text_banner_3.png',
+    altText: 'Nuevos horizontes, la misma resistencia',
   },
 ]
 
@@ -175,33 +175,21 @@ function Navbar() {
                         transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
                       />
                     )}
-                    {(slide.title || slide.subtitle) && (
+                    {slide.textImage && (
                       <motion.div
                         className={styles.slideTextContainer}
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
                       >
-                        {slide.title && (
-                          <h2 className={styles.slideTitleLeft}>
-                            {slide.title.split('\n').map((line, i) => (
-                              <span key={i}>
-                                {line}
-                                <br />
-                              </span>
-                            ))}
-                          </h2>
-                        )}
-                        {slide.subtitle && (
-                          <p className={styles.slideSubtitleLeft}>
-                            {slide.subtitle.split('\n').map((line, i) => (
-                              <span key={i}>
-                                {line}
-                                <br />
-                              </span>
-                            ))}
-                          </p>
-                        )}
+                        <img
+                          src={slide.textImage}
+                          alt={slide.altText}
+                          className={styles.textImage}
+                        />
+                        <h2 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>
+                          {slide.altText}
+                        </h2>
                       </motion.div>
                     )}
                   </div>
