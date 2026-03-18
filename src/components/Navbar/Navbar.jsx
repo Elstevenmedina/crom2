@@ -73,6 +73,11 @@ function Navbar() {
               <Link to="/" className={styles.logoLink}>
                 <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
               </Link>
+              <img 
+                src="/assets/contactanos/by-hamzi-group.png"
+                alt="By Hamzi"
+                className={styles.hamziLogo}
+              />
             </div>
 
             {/* Hamburger button (mobile only) */}
@@ -128,6 +133,11 @@ function Navbar() {
                 <Link to="/" className={styles.logoLink}>
                   <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
                 </Link>
+                <img 
+                  src="/assets/contactanos/by-hamzi-group.png"
+                  alt="By Hamzi"
+                  className={styles.hamziLogo}
+                />
               </div>
 
               <button

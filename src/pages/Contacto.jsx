@@ -243,7 +243,7 @@ function Contacto() {
 
             {/* Banner Hamzi Group */}
             <section className={styles.hamziBannerSection}>
-                <a href="https://www.hamzisa.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.hamzisa.com" target="_blank" rel="noopener noreferrer" className={styles.hamziLinkWrapper}>
                     <motion.img
                         src="/assets/contactanos/by-hamzi-group.png"
                         alt="By Hamzi Group"
@@ -253,6 +253,7 @@ function Contacto() {
                         viewport={{ once: true, margin: "-50px" }}
                         transition={{ duration: 0.8 }}
                     />
+                    <span className={styles.hamziBannerLinkText}>https://www.hamzisa.com</span>
                 </a>
             </section>
 
