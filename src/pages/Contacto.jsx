@@ -366,19 +366,24 @@ function Contacto() {
                             />
 
                             <motion.div variants={inputPop} className={styles.formFooterInline}>
-                                <p className={styles.footerText}>
-                                    Te respondemos de inmediato<br />
-                                    con toda la información.
-                                </p>
-                                <motion.button
-                                    whileHover={{ scale: 1.05, boxShadow: "0px 10px 15px rgba(205,37,37,0.3)" }}
-                                    whileTap={{ scale: 0.95 }}
-                                    type="submit"
-                                    className={styles.submitBtn}
-                                    disabled={loading}
-                                >
-                                    {loading ? 'Enviando...' : 'Enviar'}
-                                </motion.button>
+                                <div className={styles.footerTopRow}>
+                                    <p className={styles.footerText}>
+                                        Te respondemos de inmediato<br />
+                                        con toda la información.
+                                    </p>
+                                    <motion.button
+                                        whileHover={{ scale: 1.05, boxShadow: "0px 10px 15px rgba(205,37,37,0.3)" }}
+                                        whileTap={{ scale: 0.95 }}
+                                        type="submit"
+                                        className={styles.submitBtn}
+                                        disabled={loading}
+                                    >
+                                        {loading ? 'Enviando...' : 'Enviar'}
+                                    </motion.button>
+                                </div>
+                                <address className={styles.footerAddress}>
+                                    Hamzi, S.A. Zona Libre de Colón. Calle 16 Paseo Gorgas, Manzana 18A Edif. 42. Colón, PA.
+                                </address>
                             </motion.div>
                         </form>
                     </div>

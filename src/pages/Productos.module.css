@@ -122,8 +122,32 @@
 }
 
 .sidebar {
-    width: 200px;
+    width: 250px;
+    background-color: #333333;
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
     flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.sidebarHeader {
+    margin-bottom: 1.5rem;
+}
+
+.sidebarTitle {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.sidebarDivider {
+    width: 100%;
+    max-width: 160px;
+    height: 1px;
+    background-color: #cd2525;
 }
 
 .filterSection {
@@ -207,20 +231,25 @@
 .categoryItem {
     display: block;
     padding: 0.85rem 0;
-    font-size: 1.15rem;
-    color: #333;
-    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    color: #cccccc;
+    border-bottom: 1px solid #555555;
     transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.categoryItem:last-child {
+    border-bottom: none;
 }
 
 .categoryItem:hover {
-    color: #000;
+    color: #ffffff;
     font-weight: 600;
 }
 
 .categoryItemActive {
     font-weight: 700;
-    color: #000;
+    color: #ffffff;
 }
 
 /* Grid */
@@ -475,6 +504,21 @@
 
     .sidebar {
         width: 100%;
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .sidebarHeader {
+        margin-bottom: 1.5rem;
+    }
+
+    .sidebarTitle {
+        color: #000000;
+        font-size: 1.5rem;
+    }
+
+    .sidebarDivider {
+        width: 100px;
     }
 
     .categoryNav {
@@ -489,6 +533,7 @@
         border: 1px solid #ddd;
         border-radius: 50px;
         font-size: 0.9rem;
+        color: #333;
     }
 
     .categoryItemActive {

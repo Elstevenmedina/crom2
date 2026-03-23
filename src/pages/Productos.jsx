@@ -135,16 +135,15 @@ function Productos() {
                 description={`Explora nuestra colecci\u00f3n de ${(currentCat?.label || 'productos').toLowerCase()} CROM. Dise\u00f1os resistentes, funcionales y con estilo para estudiantes y familias.`}
                 path={`/productos${activeCategory ? `?categoria=${activeCategory}` : ''}`}
             />
-            {/* Header */}
-            <div className={styles.topSection}>
-                <div className={styles.titleWrapper}>
-                    <h1 className={styles.pageTitle}>PRODUCTOS</h1>
-                </div>
-            </div>
+
 
             <div className={styles.content}>
                 {/* Sidebar de categorías */}
                 <aside className={styles.sidebar}>
+                    <div className={styles.sidebarHeader}>
+                        <h1 className={styles.sidebarTitle}>PRODUCTOS</h1>
+                        <div className={styles.sidebarDivider}></div>
+                    </div>
                     <nav className={styles.categoryNav}>
                         {categories.map((cat) => (
                             <Link

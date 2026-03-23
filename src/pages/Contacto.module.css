@@ -370,10 +370,28 @@
     background-color: #ed2c2c;
     padding: 2.5rem 4rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     border-radius: 0 0 30px 30px;
     margin: 2rem -4rem -3rem;
+}
+
+.footerTopRow {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footerAddress {
+    width: 100%;
+    margin-top: 1.5rem;
+    text-align: left;
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-style: normal;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* Footer rojo del form */
@@ -435,11 +453,16 @@
     }
 
     .formFooterInline {
-        flex-direction: column;
         padding: 2rem;
         gap: 1.5rem;
         text-align: center;
         margin: 2rem -2rem -2rem;
+    }
+
+    .footerTopRow {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
     }
 
     .formCard {

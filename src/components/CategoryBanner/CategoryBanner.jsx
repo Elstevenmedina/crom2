@@ -28,7 +28,10 @@ function CategoryBanner() {
         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
       >
         <div className={styles.content}>
-          <h2 className={styles.title}>MARCAMOS LA DIFERENCIA</h2>
+          <h2 className={styles.title}>
+            MARCAMOS&nbsp;LA<br />
+            DIFERENCIA
+          </h2>
           <p className={styles.description}>
             Diseñados para responder a las necesidades
             reales de estudiantes, familias y usuarios activos.
