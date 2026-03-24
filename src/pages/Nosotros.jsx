@@ -300,6 +300,25 @@ function Nosotros() {
           </p>
         </div>
       </motion.section>
+
+      {/* Section: Mapa */}
+      <motion.section
+        className={styles.mapSection}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+      >
+        <motion.img
+          src="/assets/Nosotros/Mapa.png"
+          alt="Mapa de presencia de Crom"
+          className={styles.mapImage}
+          initial={{ opacity: 0, scale: 0.9, y: 60 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+        />
+      </motion.section>
     </main>
   )
 }

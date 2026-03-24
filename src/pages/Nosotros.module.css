@@ -807,3 +807,27 @@
     font-size: 0.95rem;
   }
 }
+
+/* =============================================
+   SECTION: MAPA
+   ============================================= */
+.mapSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; /* Quitamos padding para que ocupe toda la franja */
+  background: #ffffff;
+}
+
+.mapImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mapSection {
+    padding: 0;
+  }
+}
