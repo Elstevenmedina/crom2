@@ -27,7 +27,7 @@ const ITEMS_PER_PAGE = 16
 
 function Productos() {
     const [searchParams] = useSearchParams()
-    const activeCategory = searchParams.get('categoria') || null
+    const activeCategory = searchParams.get('categoria') || 'cartucheras'
 
     const [products, setProducts] = useState([])
 
@@ -148,7 +148,7 @@ function Productos() {
                         {categories.map((cat) => (
                             <Link
                                 key={cat.key}
-                                to={activeCategory === cat.key ? '/productos' : `/productos?categoria=${cat.key}`}
+                                to={`/productos?categoria=${cat.key}`}
                                 className={`${styles.categoryItem} ${activeCategory === cat.key ? styles.categoryItemActive : ''}`}
                             >
                                 {cat.label}
