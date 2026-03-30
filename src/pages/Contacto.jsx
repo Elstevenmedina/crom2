@@ -166,7 +166,13 @@ function Contacto() {
                 variants={blurDrop}
             >
                 <div className={styles.heroContent}>
-                    <h1 className={styles.title}>Contáctanos</h1>
+                    <h1 className={styles.title}>
+                        <img 
+                            src="/assets/contactanos/contactanos.png" 
+                            alt="Contáctanos" 
+                            className={styles.titleImage} 
+                        />
+                    </h1>
                     <p className={styles.subtitle}>
                         ¿Necesitas información sobre morrales, distribución o alianzas comerciales?<br />
                         Escríbenos y te respondemos de inmediato.
