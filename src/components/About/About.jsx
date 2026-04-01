@@ -75,7 +75,7 @@ function About() {
               <h3>Expansión</h3>
               <p>
                 Gracias a su experiencia y estructura, Hoy estamos presentes
-                en 15 países y expandiéndonos, atendiendo
+                en +16 países y expandiéndonos, atendiendo
                 mercados reginales con eficiencia.
               </p>
             </div>
