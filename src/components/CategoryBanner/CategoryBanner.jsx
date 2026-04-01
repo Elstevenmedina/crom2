@@ -35,11 +35,12 @@ function CategoryBanner() {
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 30, backgroundColor: "#f54c4c" },
     visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] } // EaseOutQuad suave
+      opacity: 1, 
+      y: 0, 
+      backgroundColor: "#f54c4c", // Color base de entrada
+      transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] }
     }
   }
 
@@ -85,8 +86,6 @@ function CategoryBanner() {
               <motion.div 
                 key={index} 
                 variants={itemVariants}
-                initial="hidden"
-                animate={{ y: 0, backgroundColor: "#f54c4c" }} // Forzamos el retorno al color base al salir del hover
                 whileHover={{ 
                   y: -8, 
                   backgroundColor: "#d11d1d", 
