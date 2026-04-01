@@ -1,130 +1,188 @@
-/* =============================================
-   CATEGORY BANNER — LONCHERAS
-   ============================================= */
 .section {
-  display: flex;
   width: 100%;
-  min-height: 580px;
-  margin-top: 10rem;
-}
-
-/* ---- Lado izquierdo: Imagen ---- */
-.left {
-  flex: 1;
-  background: #8a8a8a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4.5rem 0 5.5rem; /* Padding Y reducido un poco */
+  background-color: #d9d9d9;
   overflow: hidden;
+  margin-top: 10rem; /* Más separación con la sección de arriba */
 }
 
-/* Placeholder hasta tener imagen real */
-.imagePlaceholder {
-  width: 100%;
-  height: 100%;
-  min-height: 420px;
-  background: linear-gradient(135deg, #6b6b6b 0%, #9a9a9a 100%);
-  display: flex;
+.container {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr; /* Ligero sesgo para inclinar los cards hacia la derecha */
+  gap: 4.5rem;
+  padding: 0 4rem;
   align-items: center;
-  justify-content: center;
 }
 
-.imagePlaceholder span {
-  color: #cccccc;
-  font-size: 1.25rem;
+/* Lado Izquierdo */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.heading {
+  font-size: 5.2rem;
+  font-weight: 800;
+  color: #ee2424;
+  line-height: 0.95;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.descriptionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.paragraph {
+  font-size: 1.15rem;
+  color: #1a1a1a;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 600px;
   font-weight: 500;
 }
 
-/* Imagen real del producto */
-.productImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.75);
-}
-
-/* ---- Lado derecho: Texto sobre fondo oscuro ---- */
+/* Lado Derecho */
 .right {
-  flex: 1;
-  background: #1a1a1a url('/assets/Home/background_black.png') center/cover no-repeat;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
+  justify-content: flex-end;
+  width: 100%;
 }
 
-.content {
-  max-width: 650px;
-  text-align: center;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  width: 100%;
 }
 
-.title {
-  font-size: 4rem;
-  font-weight: 700;
+.card {
+  border-radius: 40px;
+  padding: 3.5rem 2.5rem; /* Ajuste manual del padding */
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   color: #ffffff;
-  letter-spacing: 0.04em;
-  margin-bottom: 1rem;
-  line-height: 1;
+  /* Se eliminó min-height y aspect-ratio para que la altura dependa solo del contenido */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+  width: 100%;
 }
 
-.description {
-  font-size: 1.45rem;
-  color: #d0d0d0;
-  line-height: 1.4;
+.card:hover {
+  transform: translateY(-5px);
+  background-color: #d11d1d; /* Más oscuro en hover */
+}
+
+.red {
+  background-color: #f54c4c; /* Rojo menos fuerte (más suave) en estado idle */
+}
+
+.lightRed {
+  background-color: #f54c4c; /* Se unifica al rojo suave por petición del usuario */
+}
+
+.cardTitle {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+  white-space: pre-line;
+  text-align: center; /* Asegura el centrado */
+}
+
+.cardContent {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin: 0;
   font-weight: 400;
+  text-align: center; /* Centrado de nuevo a petición del usuario */
 }
 
 /* =============================================
    RESPONSIVE
    ============================================= */
-@media (max-width: 768px) {
-  .section {
-    flex-direction: column;
-    min-height: auto;
-    margin-top: 3rem;
+@media (max-width: 1200px) {
+  .heading {
+    font-size: 4rem;
   }
+}
 
-  .left {
-    min-height: 250px;
-    max-height: 300px;
+@media (max-width: 1100px) {
+  .container {
+    padding: 0 2.5rem;
+    gap: 3rem;
   }
-
-  .imagePlaceholder {
-    min-height: 250px;
+  .heading {
+    font-size: 3.5rem;
   }
-
-  .right {
-    padding: 2rem 1.5rem;
-  }
-
-  .title {
-    font-size: 2.2rem;
-  }
-
-  .description {
+  .paragraph {
     font-size: 1.1rem;
   }
+  .cardTitle {
+    font-size: 1.5rem;
+  }
 }
 
-@media (max-width: 480px) {
-  .section {
-    margin-top: 2rem;
+@media (max-width: 968px) {
+  .container {
+    grid-template-columns: 1fr; /* Una sola columna */
+    padding: 0 2rem;
+    gap: 4rem;
+    text-align: center;
   }
-
+  
   .left {
-    min-height: 200px;
-    max-height: 250px;
+    align-items: center;
   }
-
-  .title {
-    font-size: 1.8rem;
+  
+  .paragraph {
+    max-width: 100%;
   }
-
-  .description {
-    font-size: 0.9rem;
-  }
-
+  
   .right {
-    padding: 1.5rem 1.25rem;
+    justify-content: center;
+  }
+  
+  .heading {
+    font-size: 3.2rem;
+  }
+  
+  .section {
+    padding: 5rem 0;
+    margin-top: 6rem; /* Menos separación en tablet/móvil */
   }
 }
+
+@media (max-width: 600px) {
+  .heading {
+    font-size: 2.5rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr; /* Una sola tarjeta por fila en móvil pequeño */
+    gap: 1.5rem;
+  }
+  
+  .card {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .section {
+    padding: 4rem 0;
+    margin-top: 4rem;
+  }
+
+  .paragraph {
+    font-size: 1rem;
+  }
+}
+
+
