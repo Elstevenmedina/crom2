@@ -7,6 +7,16 @@
     box-sizing: border-box;
 }
 
+.pageSubtitle {
+    font-size: 1.15rem;
+    color: #6b7280; /* Gris profesional */
+    margin: 0 auto 3.5rem auto;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    max-width: 1200px; /* Permitimos que se extienda en una sola línea */
+}
+
 /* Header: Title and Toolbar */
 .header {
     margin-top: 2rem;

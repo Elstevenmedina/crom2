@@ -5,7 +5,13 @@ function CategoryBanner() {
   const cards = [
     {
       title: 'Pensado para\nvender',
-      content: 'Diseños alineados con tendencias actuales. Selección estratégica de modelos. Alta aceptación en punto de venta.',
+      content: (
+        <>
+          • Diseños alineados con tendencias actuales.<br />
+          • Selección estratégica de modelos.<br />
+          • Alta aceptación en punto de venta.
+        </>
+      ),
       color: 'red'
     },
     {
@@ -37,8 +43,8 @@ function CategoryBanner() {
   const itemVariants = {
     hidden: { opacity: 0, y: 30, backgroundColor: "#f54c4c" },
     visible: {
-      opacity: 1, 
-      y: 0, 
+      opacity: 1,
+      y: 0,
       backgroundColor: "#f54c4c", // Color base de entrada
       transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1.0] }
     }
@@ -83,13 +89,13 @@ function CategoryBanner() {
         >
           <div className={styles.grid}>
             {cards.map((card, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={itemVariants}
-                whileHover={{ 
-                  y: -8, 
-                  backgroundColor: "#d11d1d", 
-                  transition: { duration: 0.2 } 
+                whileHover={{
+                  y: -8,
+                  backgroundColor: "#d11d1d",
+                  transition: { duration: 0.2 }
                 }}
                 className={`${styles.card} ${card.color === 'lightRed' ? styles.lightRed : styles.red}`}
               >

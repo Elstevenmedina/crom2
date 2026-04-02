@@ -136,6 +136,9 @@ function Productos() {
                 path={`/productos${activeCategory ? `?categoria=${activeCategory}` : ''}`}
             />
 
+            <p className={styles.pageSubtitle}>
+                A continuación encontrarás una pequeña fracción de lo que ofrecemos, contáctanos por más
+            </p>
 
             <div className={styles.content}>
                 {/* Sidebar de categorías */}
