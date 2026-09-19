@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './DashboardHome.module.css'
 
 function DashboardHome({ onNavigate }) {
@@ -15,44 +15,22 @@ function DashboardHome({ onNavigate }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!supabase) {
-        setLoading(false)
-        return
-      }
-
-      const [
-        { count: productCount },
-        { data: categoryData },
-        { count: messageCount },
-        { data: recentProds },
-        { data: recentMsgs },
-      ] = await Promise.all([
-        supabase.from('products').select('*', { count: 'exact', head: true }),
-        supabase.from('products').select('category'),
-        supabase.from('contact_submissions').select('*', { count: 'exact', head: true }),
-        supabase.from('products').select('*').order('created_at', { ascending: false }).limit(5),
-        supabase.from('contact_submissions').select('*').order('created_at', { ascending: false }).limit(5),
-      ])
-
-      const uniqueCategories = new Set((categoryData || []).map((p) => p.category).filter(Boolean))
-
-      let visitCount = null
       try {
-        const { count } = await supabase.from('page_views').select('*', { count: 'exact', head: true })
-        visitCount = count
-      } catch {
-        visitCount = null
-      }
+        const summary = await api.get('/dashboard/summary')
 
-      setStats({
-        products: productCount || 0,
-        categories: uniqueCategories.size,
-        messages: messageCount || 0,
-        visits: visitCount,
-      })
-      setRecentProducts(recentProds || [])
-      setRecentMessages(recentMsgs || [])
-      setLoading(false)
+        setStats({
+          products: summary.totals.products,
+          categories: summary.totals.categories,
+          messages: summary.totals.contacts,
+          visits: summary.totals.pageViews,
+        })
+        setRecentProducts(summary.recentProducts)
+        setRecentMessages(summary.recentContacts)
+      } catch (error) {
+        console.error('Error cargando el dashboard:', error)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchData()
@@ -147,7 +125,7 @@ function DashboardHome({ onNavigate }) {
                       <span className={styles.activityItemName}>{p.name || p.code}</span>
                       <span className={styles.activityItemMeta}>{p.category}</span>
                     </div>
-                    <span className={styles.activityDate}>{formatDate(p.created_at)}</span>
+                    <span className={styles.activityDate}>{formatDate(p.createdAt)}</span>
                   </li>
                 ))}
               </ul>
@@ -164,10 +142,10 @@ function DashboardHome({ onNavigate }) {
                 {recentMessages.map((m) => (
                   <li key={m.id} className={styles.activityItem}>
                     <div className={styles.activityItemInfo}>
-                      <span className={styles.activityItemName}>{m.full_name}</span>
+                      <span className={styles.activityItemName}>{m.fullName}</span>
                       <span className={styles.activityItemMeta}>{m.email}</span>
                     </div>
-                    <span className={styles.activityDate}>{formatDate(m.created_at)}</span>
+                    <span className={styles.activityDate}>{formatDate(m.createdAt)}</span>
                   </li>
                 ))}
               </ul>

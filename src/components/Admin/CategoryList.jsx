@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './CategoryList.module.css'
 
 function CategoryList({ onEdit, onAdd }) {
@@ -8,17 +8,14 @@ function CategoryList({ onEdit, onAdd }) {
 
   const fetchCategories = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('categories')
-      .select('*')
-      .order('name')
-
-    if (error) {
+    try {
+      const items = await api.get('/categories/admin')
+      setCategories(items)
+    } catch (error) {
       console.error('Error fetching categories:', error)
-    } else {
-      setCategories(data || [])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {
@@ -54,13 +51,13 @@ function CategoryList({ onEdit, onAdd }) {
               onClick={() => onEdit(category)}
             >
               <div className={styles.imageWrapper}>
-                {category.image_url ? (
-                  <img src={category.image_url} alt={category.name} className={styles.image} />
+                {category.imageUrl ? (
+                  <img src={category.imageUrl} alt={category.name} className={styles.image} />
                 ) : (
                   <div className={styles.noImage}>Sin imagen</div>
                 )}
-                <span className={`${styles.badge} ${category.is_active ? styles.badgeActive : styles.badgeInactive}`}>
-                  {category.is_active ? 'Activa' : 'Inactiva'}
+                <span className={`${styles.badge} ${category.isActive ? styles.badgeActive : styles.badgeInactive}`}>
+                  {category.isActive ? 'Activa' : 'Inactiva'}
                 </span>
               </div>
               <div className={styles.cardBody}>

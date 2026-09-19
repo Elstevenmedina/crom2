@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './ContactMessages.module.css'
 
 function ContactMessages() {
@@ -9,17 +9,14 @@ function ContactMessages() {
 
   const fetchMessages = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('contact_submissions')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    if (error) {
+    try {
+      const { items } = await api.get('/contacts?limit=200')
+      setMessages(items)
+    } catch (error) {
       console.error('Error fetching messages:', error)
-    } else {
-      setMessages(data || [])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {
@@ -51,7 +48,7 @@ function ContactMessages() {
             ← Volver a mensajes
           </button>
           <span className={styles.detailDate}>
-            {formatDate(selectedMessage.created_at)}
+            {formatDate(selectedMessage.createdAt)}
           </span>
         </div>
 
@@ -59,7 +56,7 @@ function ContactMessages() {
           <div className={styles.detailGrid}>
             <div className={styles.detailField}>
               <span className={styles.detailLabel}>Nombre</span>
-              <span className={styles.detailValue}>{selectedMessage.full_name}</span>
+              <span className={styles.detailValue}>{selectedMessage.fullName}</span>
             </div>
             <div className={styles.detailField}>
               <span className={styles.detailLabel}>Empresa</span>
@@ -111,11 +108,11 @@ function ContactMessages() {
             >
               <div className={styles.messageTop}>
                 <div className={styles.messageInfo}>
-                  <h3 className={styles.messageName}>{msg.full_name}</h3>
+                  <h3 className={styles.messageName}>{msg.fullName}</h3>
                   <p className={styles.messageEmail}>{msg.email}</p>
                 </div>
                 <span className={styles.messageDate}>
-                  {formatDate(msg.created_at)}
+                  {formatDate(msg.createdAt)}
                 </span>
               </div>
               {msg.company && (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './ProductList.module.css'
 
 const CATEGORY_LABELS = {
@@ -17,17 +17,14 @@ function ProductList({ onEdit, onAdd }) {
 
   const fetchProducts = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    if (error) {
+    try {
+      const { items } = await api.get('/products/admin?limit=200')
+      setProducts(items)
+    } catch (error) {
       console.error('Error fetching products:', error)
-    } else {
-      setProducts(data || [])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   useEffect(() => {
@@ -63,13 +60,13 @@ function ProductList({ onEdit, onAdd }) {
               onClick={() => onEdit(product)}
             >
               <div className={styles.imageWrapper}>
-                {product.image_url ? (
-                  <img src={product.image_url} alt={product.name} className={styles.image} />
+                {product.imageUrl ? (
+                  <img src={product.imageUrl} alt={product.name} className={styles.image} />
                 ) : (
                   <div className={styles.noImage}>Sin imagen</div>
                 )}
-                <span className={`${styles.badge} ${product.is_active ? styles.badgeActive : styles.badgeInactive}`}>
-                  {product.is_active ? 'Activo' : 'Inactivo'}
+                <span className={`${styles.badge} ${product.isActive ? styles.badgeActive : styles.badgeInactive}`}>
+                  {product.isActive ? 'Activo' : 'Inactivo'}
                 </span>
               </div>
               <div className={styles.cardBody}>

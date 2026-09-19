@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSearchParams, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { api } from '../lib/api'
 import SEO from '../components/SEO'
 import styles from './Productos.module.css'
 
@@ -24,6 +24,13 @@ const AVAILABLE_COLORS = [
 ]
 
 const ITEMS_PER_PAGE = 16
+
+// Arma la query del catalogo publico: el backend ya filtra por activos
+const buildQuery = ({ limit, offset, category }) => {
+    const params = new URLSearchParams({ limit, offset })
+    if (category) params.set('category', category)
+    return `/products?${params.toString()}`
+}
 
 function Productos() {
     const [searchParams] = useSearchParams()
@@ -52,47 +59,20 @@ function Productos() {
             setLoading(true)
             setCurrentPage(1)
 
-            if (!supabase) {
-                setProducts([])
-                setTotalCount(0)
-                setLoading(false)
-                return
-            }
-
-            // Build count query
-            let countQuery = supabase
-                .from('products')
-                .select('*', { count: 'exact', head: true })
-                .eq('is_active', true)
-
-            if (activeCategory) {
-                countQuery = countQuery.eq('category', activeCategory)
-            }
-
-            const { count } = await countQuery
-            setTotalCount(count || 0)
-
-            // Build data query
-            let dataQuery = supabase
-                .from('products')
-                .select('*')
-                .eq('is_active', true)
-
-            if (activeCategory) {
-                dataQuery = dataQuery.eq('category', activeCategory)
-            }
-
-            const { data, error } = await dataQuery
-                .order('created_at', { ascending: false })
-                .range(0, ITEMS_PER_PAGE - 1)
-
-            if (error) {
+            try {
+                // El backend devuelve total e items en una sola llamada
+                const { total, items } = await api.get(
+                    buildQuery({ limit: ITEMS_PER_PAGE, offset: 0, category: activeCategory })
+                )
+                setTotalCount(total)
+                setProducts(items)
+            } catch (error) {
                 console.error('Error fetching products:', error)
                 setProducts([])
-            } else {
-                setProducts(data || [])
+                setTotalCount(0)
+            } finally {
+                setLoading(false)
             }
-            setLoading(false)
         }
 
         fetchProducts()
@@ -100,28 +80,17 @@ function Productos() {
 
     // Paginación
     const loadMore = async () => {
-        if (!supabase) return
-
         const nextPage = currentPage + 1
-        const from = (nextPage - 1) * ITEMS_PER_PAGE
-        const to = from + ITEMS_PER_PAGE - 1
+        const offset = (nextPage - 1) * ITEMS_PER_PAGE
 
-        let query = supabase
-            .from('products')
-            .select('*')
-            .eq('is_active', true)
-
-        if (activeCategory) {
-            query = query.eq('category', activeCategory)
-        }
-
-        const { data, error } = await query
-            .order('created_at', { ascending: false })
-            .range(from, to)
-
-        if (!error && data) {
-            setProducts((prev) => [...prev, ...data])
+        try {
+            const { items } = await api.get(
+                buildQuery({ limit: ITEMS_PER_PAGE, offset, category: activeCategory })
+            )
+            setProducts((prev) => [...prev, ...items])
             setCurrentPage(nextPage)
+        } catch (error) {
+            console.error('Error fetching products:', error)
         }
     }
 
@@ -181,7 +150,7 @@ function Productos() {
                                     >
                                         <div className={styles.productImageWrap}>
                                             <motion.img
-                                                src={product.image_url || '/assets/Home/cartuchera.png'}
+                                                src={product.imageUrl || '/assets/Home/cartuchera.png'}
                                                 alt={product.name || 'Producto'}
                                                 className={styles.productImage}
                                                 layoutId={`image-${product.id}`}

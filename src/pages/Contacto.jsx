@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
-import { supabase } from '../lib/supabase'
+import { api } from '../lib/api'
 import SEO from '../components/SEO'
 import styles from './Contacto.module.css'
 
@@ -61,23 +61,21 @@ function Contacto() {
         setStatus({ type: '', text: '' })
 
         try {
-            // 1. Guardar en Supabase
-            if (supabase) {
-                const { error: dbError } = await supabase
-                    .from('contact_submissions')
-                    .insert([{
-                        full_name: formData.full_name,
-                        company: formData.company,
-                        email: formData.email,
-                        type: formData.type,
-                        phone: formData.phone,
-                        country: formData.country,
-                        message: formData.message,
-                    }])
-
-                if (dbError) {
-                    console.error('Error saving to Supabase:', dbError)
-                }
+            // 1. Guardar en la base de datos
+            let adminEmail = ''
+            try {
+                const saved = await api.post('/contacts', {
+                    fullName: formData.full_name,
+                    company: formData.company,
+                    email: formData.email,
+                    type: formData.type,
+                    phone: formData.phone,
+                    country: formData.country,
+                    message: formData.message,
+                })
+                adminEmail = saved?.notificationEmail || ''
+            } catch (dbError) {
+                console.error('Error guardando el mensaje:', dbError)
             }
 
             // 2. Enviar email de confirmación al usuario
@@ -96,16 +94,8 @@ function Contacto() {
             }
 
             // 3. Enviar notificación al admin
-            if (EMAILJS_SERVICE_ID && EMAILJS_PUBLIC_KEY && EMAILJS_TEMPLATE_ADMIN && supabase) {
-                // Obtener email de notificación del admin
-                const { data: settings } = await supabase
-                    .from('admin_settings')
-                    .select('value')
-                    .eq('key', 'contact_notification_email')
-                    .single()
-
-                const adminEmail = settings?.value
-
+            if (EMAILJS_SERVICE_ID && EMAILJS_PUBLIC_KEY && EMAILJS_TEMPLATE_ADMIN) {
+                // El correo destino viene en la respuesta de POST /contacts
                 if (adminEmail) {
                     await emailjs.send(
                         EMAILJS_SERVICE_ID,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './AdminSettings.module.css'
 
 function AdminSettings() {
@@ -14,19 +14,14 @@ function AdminSettings() {
 
   const fetchSettings = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('admin_settings')
-      .select('*')
-      .eq('key', 'contact_notification_email')
-      .single()
-
-    if (data) {
-      setNotificationEmail(data.value || '')
-    }
-    if (error && error.code !== 'PGRST116') {
+    try {
+      const { value } = await api.get('/settings/contact_notification_email')
+      setNotificationEmail(value || '')
+    } catch (error) {
       console.error('Error fetching settings:', error)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const handleSave = async (e) => {
@@ -35,15 +30,9 @@ function AdminSettings() {
     setMessage({ type: '', text: '' })
 
     try {
-      const { error } = await supabase
-        .from('admin_settings')
-        .upsert({
-          key: 'contact_notification_email',
-          value: notificationEmail,
-          updated_at: new Date().toISOString(),
-        })
-
-      if (error) throw error
+      await api.put('/settings/contact_notification_email', {
+        value: notificationEmail,
+      })
 
       setMessage({ type: 'success', text: 'Configuración guardada correctamente.' })
     } catch (err) {

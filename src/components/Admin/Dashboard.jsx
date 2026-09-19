@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
+import { logout } from '../../lib/auth'
 import DashboardHome from './DashboardHome'
 import ProductList from './ProductList'
 import ProductForm from './ProductForm'
@@ -21,8 +21,8 @@ function Dashboard() {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [showProductForm, setShowProductForm] = useState(false)
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
+  const handleLogout = () => {
+    logout()
     navigate('/login')
   }
 

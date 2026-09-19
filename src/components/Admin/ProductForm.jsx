@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './ProductForm.module.css'
 
 const FIXED_CATEGORIES = [
@@ -30,8 +30,8 @@ function ProductForm({ product, onSave, onCancel }) {
       setName(product.name || '')
       setCode(product.code || '')
       setCategory(product.category || '')
-      setIsActive(product.is_active ?? true)
-      setImagePreview(product.image_url || '')
+      setIsActive(product.isActive ?? true)
+      setImagePreview(product.imageUrl || '')
       setFeatures(product.features || [])
     }
   }, [product])
@@ -63,57 +63,37 @@ function ProductForm({ product, onSave, onCancel }) {
     }
   }
 
-  const uploadImage = async (file) => {
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
-
-    const { error: uploadError } = await supabase.storage
-      .from('product-images')
-      .upload(fileName, file)
-
-    if (uploadError) throw uploadError
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('product-images')
-      .getPublicUrl(fileName)
-
-    return publicUrl
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
-      let imageUrl = product?.image_url || ''
+      let imageUrl = product?.imageUrl || ''
+      let imagePublicId = product?.imagePublicId || ''
 
+      // El backend sube a Cloudinary y devuelve tambien el publicId,
+      // necesario para borrar la imagen anterior al reemplazarla
       if (imageFile) {
-        imageUrl = await uploadImage(imageFile)
+        const uploaded = await api.upload('products', imageFile)
+        imageUrl = uploaded.url
+        imagePublicId = uploaded.publicId
       }
 
       const productData = {
         name,
         code,
         category: category || null,
-        is_active: isActive,
-        image_url: imageUrl,
+        isActive,
+        imageUrl,
+        imagePublicId,
         features,
       }
 
       if (isEditing) {
-        const { error: updateError } = await supabase
-          .from('products')
-          .update(productData)
-          .eq('id', product.id)
-
-        if (updateError) throw updateError
+        await api.patch(`/products/${product.id}`, productData)
       } else {
-        const { error: insertError } = await supabase
-          .from('products')
-          .insert([productData])
-
-        if (insertError) throw insertError
+        await api.post('/products', productData)
       }
 
       onSave()
@@ -129,12 +109,7 @@ function ProductForm({ product, onSave, onCancel }) {
 
     setLoading(true)
     try {
-      const { error: deleteError } = await supabase
-        .from('products')
-        .delete()
-        .eq('id', product.id)
-
-      if (deleteError) throw deleteError
+      await api.delete(`/products/${product.id}`)
       onSave()
     } catch (err) {
       setError(err.message || 'Error al eliminar el producto')

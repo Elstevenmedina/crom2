@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './Contact.module.css'
 
 function Contact() {
@@ -21,18 +21,12 @@ function Contact() {
     e.preventDefault()
     setStatus('sending')
 
-    if (!supabase) {
-      console.warn('Supabase not configured. Form submission disabled.')
-      setStatus('error')
-      return
-    }
-
     try {
-      const { error } = await supabase
-        .from('contacts')
-        .insert([formData])
-
-      if (error) throw error
+      await api.post('/contacts', {
+        fullName: formData.name,
+        email: formData.email,
+        message: formData.message,
+      })
 
       setStatus('success')
       setFormData({ name: '', email: '', message: '' })
@@ -84,7 +78,7 @@ function Contact() {
           )}
           {status === 'error' && (
             <p className={styles.error}>
-              Algo salió mal. Verifica tu configuración de Supabase.
+              Algo salió mal. Intenta de nuevo en unos minutos.
             </p>
           )}
         </form>

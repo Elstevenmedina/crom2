@@ -11,7 +11,7 @@ import Login from './components/Admin/Login'
 import Seed from './components/Admin/Seed'
 import ProtectedRoute from './components/Admin/ProtectedRoute'
 import Dashboard from './components/Admin/Dashboard'
-import { supabase } from './lib/supabase'
+import { api } from './lib/api'
 import './App.css'
 
 function ScrollToTop() {
@@ -20,9 +20,9 @@ function ScrollToTop() {
     window.scrollTo(0, 0)
 
     // Registrar visita solo en páginas públicas
-    if (supabase && !pathname.startsWith('/admin') && pathname !== '/login' && pathname !== '/seed') {
-      supabase.from('page_views').insert([{ page_path: pathname }]).then(({ error }) => {
-        if (error) console.error('Page view insert error:', error)
+    if (!pathname.startsWith('/admin') && pathname !== '/login' && pathname !== '/seed') {
+      api.post('/page-views', { pagePath: pathname }).catch((error) => {
+        console.error('Page view insert error:', error)
       })
     }
   }, [pathname])

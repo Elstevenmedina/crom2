@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
+import { login } from '../../lib/auth'
 import styles from './Login.module.css'
 
 function Login() {
@@ -16,17 +16,7 @@ function Login() {
     setLoading(true)
 
     try {
-      if (!supabase) {
-        throw new Error('Supabase no está configurado. Verifica las variables de entorno.')
-      }
-
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-
-      if (authError) throw authError
-
+      await login(email, password)
       navigate('/admin')
     } catch (err) {
       setError(err.message || 'Error al iniciar sesión')

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './CategoryForm.module.css'
 
 function CategoryForm({ category, onSave, onCancel }) {
@@ -15,8 +15,8 @@ function CategoryForm({ category, onSave, onCancel }) {
   useEffect(() => {
     if (category) {
       setName(category.name || '')
-      setIsActive(category.is_active ?? true)
-      setImagePreview(category.image_url || '')
+      setIsActive(category.isActive ?? true)
+      setImagePreview(category.imageUrl || '')
     }
   }, [category])
 
@@ -28,54 +28,32 @@ function CategoryForm({ category, onSave, onCancel }) {
     }
   }
 
-  const uploadImage = async (file) => {
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
-
-    const { error: uploadError } = await supabase.storage
-      .from('category-images')
-      .upload(fileName, file)
-
-    if (uploadError) throw uploadError
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('category-images')
-      .getPublicUrl(fileName)
-
-    return publicUrl
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
-      let imageUrl = category?.image_url || ''
+      let imageUrl = category?.imageUrl || ''
+      let imagePublicId = category?.imagePublicId || ''
 
       if (imageFile) {
-        imageUrl = await uploadImage(imageFile)
+        const uploaded = await api.upload('categories', imageFile)
+        imageUrl = uploaded.url
+        imagePublicId = uploaded.publicId
       }
 
       const categoryData = {
         name,
-        is_active: isActive,
-        image_url: imageUrl,
+        isActive,
+        imageUrl,
+        imagePublicId,
       }
 
       if (isEditing) {
-        const { error: updateError } = await supabase
-          .from('categories')
-          .update(categoryData)
-          .eq('id', category.id)
-
-        if (updateError) throw updateError
+        await api.patch(`/categories/${category.id}`, categoryData)
       } else {
-        const { error: insertError } = await supabase
-          .from('categories')
-          .insert([categoryData])
-
-        if (insertError) throw insertError
+        await api.post('/categories', categoryData)
       }
 
       onSave()
@@ -91,12 +69,7 @@ function CategoryForm({ category, onSave, onCancel }) {
 
     setLoading(true)
     try {
-      const { error: deleteError } = await supabase
-        .from('categories')
-        .delete()
-        .eq('id', category.id)
-
-      if (deleteError) throw deleteError
+      await api.delete(`/categories/${category.id}`)
       onSave()
     } catch (err) {
       setError(err.message || 'Error al eliminar la categoría')

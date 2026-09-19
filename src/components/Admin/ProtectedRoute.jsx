@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
+import { isAuthenticated, checkStatus, logout } from '../../lib/auth'
 
 function ProtectedRoute() {
-  const [session, setSession] = useState(null)
+  const [authorized, setAuthorized] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!supabase) {
-      setLoading(false)
-      return
+    let cancelled = false
+
+    const validate = async () => {
+      if (!isAuthenticated()) {
+        if (!cancelled) setLoading(false)
+        return
+      }
+
+      // El token puede haber expirado; el backend lo valida y devuelve uno nuevo
+      try {
+        await checkStatus()
+        if (!cancelled) setAuthorized(true)
+      } catch {
+        logout()
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
     }
 
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      setSession(currentSession)
-      setLoading(false)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, currentSession) => {
-        setSession(currentSession)
-      }
-    )
-
-    return () => subscription.unsubscribe()
+    validate()
+    return () => { cancelled = true }
   }, [])
 
   if (loading) {
@@ -34,7 +38,7 @@ function ProtectedRoute() {
     )
   }
 
-  if (!session) {
+  if (!authorized) {
     return <Navigate to="/login" replace />
   }
 

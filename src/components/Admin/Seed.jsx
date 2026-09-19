@@ -1,42 +1,29 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
+import { api } from '../../lib/api'
 import styles from './Seed.module.css'
 
 function Seed() {
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ type: '', text: '' })
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  // El backend solo permite ejecutar el seed si no existe ningun usuario,
+  // asi que esta pantalla queda inutilizable una vez inicializado el sistema.
+  const handleSeed = async () => {
     setMessage({ type: '', text: '' })
     setLoading(true)
 
     try {
-      if (!supabase) {
-        throw new Error('Supabase no está configurado. Verifica las variables de entorno.')
-      }
-
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      })
-
-      if (error) throw error
-
+      const result = await api.post('/seed')
       setMessage({
         type: 'success',
-        text: 'Usuario administrador creado exitosamente. Revisa tu correo para confirmar la cuenta si es necesario.',
+        text: `Sistema inicializado. Usuario administrador: ${result.adminEmail}. Ya puedes iniciar sesión.`,
       })
-      setEmail('')
-      setPassword('')
     } catch (err) {
       setMessage({
         type: 'error',
-        text: err.message || 'Error al crear el usuario.',
+        text: err.message || 'Error al inicializar el sistema.',
       })
     } finally {
       setLoading(false)
@@ -48,50 +35,24 @@ function Seed() {
       <div className={styles.seedCard}>
         <div className={styles.header}>
           <img src="/assets/Home/logo.png" alt="CROM" className={styles.logo} />
-          <h1 className={styles.title}>Crear Administrador</h1>
+          <h1 className={styles.title}>Inicializar Sistema</h1>
           <p className={styles.subtitle}>
-            Crea el primer usuario administrador para el panel de CROM.
+            Crea el usuario administrador, las categorías iniciales y la configuración
+            por defecto. Solo funciona con la base de datos vacía.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.form}>
           {message.text && (
             <div className={`${styles.message} ${message.type === 'success' ? styles.messageSuccess : styles.messageError}`}>
               {message.text}
             </div>
           )}
 
-          <div className={styles.field}>
-            <label htmlFor="seed-email" className={styles.label}>Correo electrónico</label>
-            <input
-              id="seed-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={styles.input}
-              placeholder="admin@crom.com"
-              required
-            />
-          </div>
-
-          <div className={styles.field}>
-            <label htmlFor="seed-password" className={styles.label}>Contraseña</label>
-            <input
-              id="seed-password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
-              placeholder="Mínimo 6 caracteres"
-              minLength={6}
-              required
-            />
-          </div>
-
-          <button type="submit" className={styles.submitBtn} disabled={loading}>
-            {loading ? 'Creando...' : 'Crear Administrador'}
+          <button onClick={handleSeed} className={styles.submitBtn} disabled={loading}>
+            {loading ? 'Inicializando...' : 'Inicializar Sistema'}
           </button>
-        </form>
+        </div>
 
         <div className={styles.footer}>
           <button
